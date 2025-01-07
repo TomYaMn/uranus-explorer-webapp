@@ -1,0 +1,8 @@
+# Dockerfile.util
+
+FROM node:14-alpine
+
+WORKDIR /app
+
+# docker build -f dockerfiles/Dockerfile.util -t node-util .
+# docker run -it -v "C:/Users/tomya/Desktop/uranus-explorer-webapp/uranus-explorer-react-app:/app" node-util npx create-react-app .

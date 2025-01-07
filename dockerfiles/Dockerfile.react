@@ -1,0 +1,26 @@
+# Use the official Node.js image
+FROM node:latest
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json to install dependencies
+COPY ./uranus-explorer-react-app/package*.json ./
+
+# Install dependencies
+RUN npm install --legacy-peer-deps
+RUN npm install react-scripts --legacy-peer-deps
+
+# Copy the rest of the app
+COPY ./uranus-explorer-react-app /app
+
+# Expose the port React will run on (3000 inside the container)
+EXPOSE 3000
+
+# Start the app
+CMD ["npm", "start"]
+
+# docker build -f Dockerfiles/Dockerfile.react -t react-app .
+# must delete the node_module and package_lock.json to run this cmd
+
+# docker run -it -v "C:/Users/tomya/Desktop/uranus-explorer-webapp/uranus-explorer-react-app:/app" -p 3001:3000 react-app

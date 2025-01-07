@@ -1,0 +1,24 @@
+# sample of running multiple dockerfile iin the docker-compose
+version: '3'
+
+services:
+  react-app: # docker-compose up --build react-app
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.react 
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./uranus-explorer-react-app:/app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - react-app-init  # Ensures that the React app is initialized first
+
+  react-app-init: # docker-compose run --rm react-app-init
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.util 
+    volumes:
+      - ./uranus-explorer-react-app:/app
+    command: npx create-react-app uranus-explorer-react-app

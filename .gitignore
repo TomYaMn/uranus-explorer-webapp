@@ -1,0 +1,34 @@
+# Ignore node_modules (common for React apps)
+node_modules/
+
+# Ignore logs, build directories, and temporary files (React specific)
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+dist/
+build/
+
+# Ignore .env files (for sensitive environment variables)
+.env
+
+# Ignore IDE/editor specific files
+.vscode/
+.idea/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# React-specific submodule ignores (if any)
+/react/node_modules/
+/react/build/
+/react/dist/
+
+# Ignore Spring Boot specific files
+springboot/target/
+springboot/.idea/
+springboot/.mvn/
+
+# If you have any other general excludes for the whole project
+*.log
+*.tmp

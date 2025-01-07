@@ -1,0 +1,8 @@
+node_modules
+package-lock.json
+.git
+.env
+*.log
+*.tar
+.DS_Store
+Thumbs.db
