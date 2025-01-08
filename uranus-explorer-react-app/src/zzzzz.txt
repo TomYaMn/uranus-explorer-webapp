@@ -1,0 +1,25 @@
+src/
+├── components/         # Reusable components (e.g., Button, Navbar, etc.)
+├── pages/              # Top-level pages that map to routes
+│   ├── Home/           # Home page
+│   │   ├── Home.js
+│   │   ├── Home.css
+│   │   └── index.js    # Optional to re-export Home.js
+│   ├── About/          # About page
+│   │   ├── About.js
+│   │   ├── About.css
+│   │   └── index.js
+│   └── ...             # Other pages
+├── layouts/            # Shared layouts for pages
+│   ├── MainLayout.js   # For pages with headers and footers
+│   ├── AuthLayout.js   # For authentication-related pages
+│   └── ...
+├── hooks/              # Custom React hooks
+├── utils/              # Utility functions and constants
+├── assets/             # Static assets like images, fonts, etc.
+├── App.js              # Main application entry
+├── index.js            # Entry point
+├── routes/             # Centralized routing configuration
+│   ├── AppRoutes.js    # All route definitions
+│   └── ProtectedRoute.js # Route guards (e.g., for authentication)
+└── styles/             # Global styles or shared CSS files

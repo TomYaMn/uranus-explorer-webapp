@@ -11,6 +11,7 @@ COPY ./uranus-explorer-react-app/package*.json ./
 RUN npm install ajv --legacy-peer-deps
 RUN npm install --legacy-peer-deps
 RUN npm install react-scripts --legacy-peer-deps
+RUN npm install react-router-dom --legacy-peer-dependencies
 
 # Copy the rest of the app
 COPY ./uranus-explorer-react-app /app
