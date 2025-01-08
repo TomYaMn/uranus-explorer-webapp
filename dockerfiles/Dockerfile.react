@@ -8,6 +8,7 @@ WORKDIR /app
 COPY ./uranus-explorer-react-app/package*.json ./
 
 # Install dependencies
+RUN npm install ajv --legacy-peer-deps
 RUN npm install --legacy-peer-deps
 RUN npm install react-scripts --legacy-peer-deps
 
@@ -23,4 +24,4 @@ CMD ["npm", "start"]
 # docker build -f Dockerfiles/Dockerfile.react -t react-app .
 # must delete the node_module and package_lock.json to run this cmd
 
-# docker run -it -v "C:/Users/tomya/Desktop/uranus-explorer-webapp/uranus-explorer-react-app:/app" -p 3001:3000 react-app
+# docker run -it -v "%cd%/uranus-explorer-react-app:/app" -p 3001:3000 react-app
