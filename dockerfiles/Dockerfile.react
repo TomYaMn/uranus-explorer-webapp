@@ -13,6 +13,11 @@ RUN npm install --legacy-peer-deps
 RUN npm install react-scripts --legacy-peer-deps
 RUN npm install react-router-dom --legacy-peer-dependencies
 
+# for ts
+RUN npm install typescript @types/react @types/react-dom --save-dev
+RUN npm install web-vitals
+RUN npx tsc --init
+
 # Copy the rest of the app
 COPY ./uranus-explorer-react-app /app
 
@@ -25,4 +30,4 @@ CMD ["npm", "start"]
 # docker build -f Dockerfiles/Dockerfile.react -t react-app .
 # must delete the node_module and package_lock.json to run this cmd
 
-# docker run -it -v "%cd%/uranus-explorer-react-app:/app" -p 3001:3000 react-app
+# docker run -it -v "%cd%/uranus-explorer-react-app:/app" -p 3001:3000 --name uranus-explorer-react-app react-app
