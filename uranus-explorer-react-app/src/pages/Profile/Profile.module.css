@@ -1,0 +1,24 @@
+/* Profile.module.css */
+.profileContainer {
+  padding: 20px;
+  text-align: center;
+}
+
+.greeting {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.logoutButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.logoutButton:hover {
+  background-color: #e03e3e;
+}

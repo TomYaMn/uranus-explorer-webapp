@@ -1,20 +1,15 @@
 import React from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route
-} from "react-router-dom";import Home from "./pages/Home";
-import About from "./pages/About";
+import { Provider } from "react-redux";
+import AppRoutes from "./routes/AppRoutes";
+import store from "./redux/store";
+import "./styles/global.css";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
-    </BrowserRouter>
-  )
-}
+    <Provider store={store}>
+      <AppRoutes />
+    </Provider>
+  );
+};
 
 export default App;
