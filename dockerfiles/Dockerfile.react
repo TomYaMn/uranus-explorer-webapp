@@ -29,6 +29,8 @@ EXPOSE 3000
 # Start the app
 CMD ["npm", "start"]
 
+# npx create-react-app myapp
+
 # docker build -f Dockerfiles/Dockerfile.react -t react-app .
 # must delete the node_module and package_lock.json to run this cmd
 

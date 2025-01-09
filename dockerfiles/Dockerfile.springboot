@@ -1,0 +1,17 @@
+FROM openjdk:17-jdk-slim
+
+VOLUME /tmp
+
+ARG JAR_FILE=../uranus-explorer-springboot-app/target/uranus-explorer-springboot-app-0.0.1-SNAPSHOT.jar
+
+COPY ${JAR_FILE} app.jar
+
+ENTRYPOINT ["java","-jar","/app.jar"]
+
+# download the initializer
+# curl https://start.spring.io/starter.zip -d dependencies=web -d name=uranus-explorer-springboot-app -d type=maven-project -o uranus-explorer-springboot-app.zip
+
+# mvnw.cmd clean package
+
+# docker build -f Dockerfiles/Dockerfile.springboot -t springboot-app .
+# docker run --rm -p 8081:8080 -v "%cd%/uranus-explorer-springboot-app:/app" springboot-app --name uranus-explorer-springboot-app
