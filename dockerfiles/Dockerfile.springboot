@@ -14,4 +14,4 @@ ENTRYPOINT ["java","-jar","/app.jar"]
 # mvnw.cmd clean package
 
 # docker build -f Dockerfiles/Dockerfile.springboot -t springboot-app .
-# docker run --rm -p 8081:8080 -v "%cd%/uranus-explorer-springboot-app:/app" springboot-app --name uranus-explorer-springboot-app
+# docker run -p 8081:8080 -v "%cd%/uranus-explorer-springboot-app:/app" --name uranus-explorer-springboot-app springboot-app 
