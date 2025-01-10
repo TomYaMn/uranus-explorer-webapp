@@ -1,0 +1,44 @@
+/* global.css */
+:root {
+    /* Core Theme */
+    --primary-color: #BBE1FA; /* Blue */
+    --secondary-color: #3282B8; /* Gray */
+    --tertiary-color: #0F4C75; /* Green */
+    --background-color: #1B262C; /* Dark background */
+    --text-color-dark: #1c1c1c; /* Dark text */
+    --text-color-light: #fdfdfd; /* Light text */
+  
+    /* Neutrals */
+    --neutral-light: #E0E0E0;
+    --neutral-dark: #404040;
+  
+    /* Feedback Colors */
+    --error-color: #E63946; /* Red */
+    --success-color: #06D6A0; /* Green */
+    --warning-color: #FFD166; /* Yellow */
+  
+    /* Hover and Active */
+    --primary-hover: #A7CCE6; /* Slightly darker blue */
+    --secondary-hover: #296B91; /* Slightly darker gray */
+    --tertiary-hover: #09344D; /* Slightly darker green */
+  }
+  
+
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color-light);
+  }
+  
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+  

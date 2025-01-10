@@ -1,6 +1,68 @@
+/* Ensure the container takes the full viewport */
 .container {
-    text-align: center;
-    padding: 2rem;
-    font-family: Arial, sans-serif;
-  }
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  perspective: 1000px; /* Add 3D perspective */
+  overflow: hidden;
+  background-color: var(--background-color); /* Optional: Background color to match the space theme */
+  background-image: url(../../../public/images/galaxy_spiral_3.jpg);
+}
+
+.scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d; /* Enable 3D rendering */
+}
+
+/* Galaxy image at the bottom of the stack */
+.galaxy {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateZ(-900px); /* Tilt and move back in Z-axis */
+  animation: rotateGalaxy 90s ease-in-out infinite;
+
+  z-index: 1;
   
+  /* Mask to fade edges */
+  -webkit-mask-image: radial-gradient(circle, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0) 100%);
+  mask-image: radial-gradient(circle, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0) 100%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+}
+
+.galaxy img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the image covers the container */
+}
+
+/* Uranus image on top of the galaxy */
+.uranus {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateZ(-150px); /* Closer to the user than galaxy */
+}
+
+.uranus img {
+  width: 200px; /* Adjust Uranus image size */
+  object-fit: contain;
+}
+
+/* Keyframes for galaxy rotation */
+@keyframes rotateGalaxy {
+  0% {
+    transform: rotateX(20deg) translateZ(-300px) rotate(0deg);
+  }
+  50% {
+    transform: rotateX(20deg) translateZ(-300px) rotate(60deg);
+  }
+  100% {
+    transform: rotateX(20deg) translateZ(-300px) rotate(0deg);
+  }
+}
