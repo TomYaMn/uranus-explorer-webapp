@@ -1,24 +1,44 @@
-# sample of running multiple dockerfile iin the docker-compose
-version: '3'
-
+version: "3.8"
 services:
-  react-app: # docker-compose up --build react-app
+  react-app:
     build:
       context: .
-      dockerfile: dockerfiles/Dockerfile.react 
+      dockerfile: Dockerfiles/Dockerfile.react
     ports:
-      - "3001:3000"
+      - "3001:3000" # Map container's React port 3000 to host's port 3001
     volumes:
-      - ./uranus-explorer-react-app:/app
+      - ./uranus-explorer-react-app:/app # Mount local directory for live updates
     environment:
-      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_USEPOLLING=true # Optional: Improves file change detection on some systems
     depends_on:
-      - react-app-init  # Ensures that the React app is initialized first
+      - mysql # Ensure MySQL is available before starting React app
 
-  react-app-init: # docker-compose run --rm react-app-init
+  springboot-app:
     build:
       context: .
-      dockerfile: dockerfiles/Dockerfile.util 
+      dockerfile: Dockerfiles/Dockerfile.springboot
+    ports:
+      - "8081:8080" # Map container's Spring Boot port 8080 to host's port 8081
     volumes:
-      - ./uranus-explorer-react-app:/app
-    command: npx create-react-app uranus-explorer-react-app
+      - ./uranus-explorer-springboot-app:/app # Mount local directory for live updates
+    depends_on:
+      - mysql # Ensure MySQL is available before starting Spring Boot app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/uranusdb?useSSL=true&allowPublicKeyRetrieval=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: uranus
+      SPRING_DATASOURCE_PASSWORD: password$1
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    ports:
+      - "3306:3306" # Map MySQL port to host
+    environment:
+      MYSQL_ROOT_PASSWORD: password$1
+      MYSQL_DATABASE: uranusdb
+      MYSQL_USER: uranus
+      MYSQL_PASSWORD: password$1
+
+volumes:
+  mysql_data:
