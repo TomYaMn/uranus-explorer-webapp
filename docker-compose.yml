@@ -39,6 +39,16 @@ services:
       MYSQL_DATABASE: uranusdb
       MYSQL_USER: uranus
       MYSQL_PASSWORD: password$1
+    volumes:
+      - ./mysqldata:/var/lib/mysql 
 
-volumes:
-  mysql_data:
+
+# docker run -d \
+#   --name mysql-solo \
+#   --restart always \
+#   -p 3306:3306 \
+#   -e MYSQL_ROOT_PASSWORD=password$1 \
+#   -e MYSQL_DATABASE=uranusdb \
+#   -e MYSQL_USER=uranus \
+#   -e MYSQL_PASSWORD=password$1 \
+#   mysql:8.0
