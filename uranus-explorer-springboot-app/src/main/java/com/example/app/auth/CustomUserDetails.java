@@ -1,4 +1,4 @@
-package com.example.app.config.auth;
+package com.example.app.auth;
 import com.example.app.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,7 +18,7 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return user.getRoles().stream()
-                .map(SimpleGrantedAuthority::new)
+                .map(role -> new SimpleGrantedAuthority(role.getName())) // Assuming role has a 'name' property
                 .collect(Collectors.toSet());
     }
 

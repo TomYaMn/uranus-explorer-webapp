@@ -1,6 +1,6 @@
 package com.example.app.controller;
 
-import com.example.app.config.auth.CustomUserDetails;
+import com.example.app.auth.CustomUserDetails;
 import com.example.app.dto.LoginUserDto;
 import com.example.app.dto.RegisterUserDto;
 import com.example.app.entity.User;
@@ -8,7 +8,6 @@ import com.example.app.response.LoginResponse;
 import com.example.app.service.AuthenticationService;
 import com.example.app.service.JwtService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

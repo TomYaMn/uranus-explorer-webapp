@@ -1,6 +1,6 @@
 package com.example.app.config;
 
-import com.example.app.config.auth.CustomUserDetails;
+import com.example.app.auth.CustomUserDetails;
 import com.example.app.entity.User;
 import com.example.app.repository.UserRepository;
 import org.springframework.context.annotation.Bean;

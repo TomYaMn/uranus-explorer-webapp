@@ -1,6 +1,6 @@
 package com.example.app.service;
 
-import com.example.app.config.auth.CustomUserDetails;
+import com.example.app.auth.CustomUserDetails;
 import com.example.app.entity.User;
 import com.example.app.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +18,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsernameWithRoles(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+
+        // Map User to UserDetails (implement your own logic here)
+        return new CustomUserDetails(user);
+    }
+
+    public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
