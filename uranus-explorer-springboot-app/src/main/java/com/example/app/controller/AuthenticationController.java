@@ -1,5 +1,6 @@
 package com.example.app.controller;
 
+import com.example.app.config.auth.CustomUserDetails;
 import com.example.app.dto.LoginUserDto;
 import com.example.app.dto.RegisterUserDto;
 import com.example.app.entity.User;
@@ -36,7 +37,11 @@ public class AuthenticationController {
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
         User authenticatedUser = authenticationService.authenticate(loginUserDto);
 
-        String jwtToken = jwtService.generateToken((UserDetails) authenticatedUser);
+        // Create CustomUserDetails object to wrap the User entity
+        CustomUserDetails customUserDetails = new CustomUserDetails(authenticatedUser);
+
+        // Pass CustomUserDetails to generate token
+        String jwtToken = jwtService.generateToken(customUserDetails);
 
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(jwtToken);

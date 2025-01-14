@@ -47,8 +47,8 @@ services:
 #   --name mysql-solo \
 #   --restart always \
 #   -p 3306:3306 \
-#   -e MYSQL_ROOT_PASSWORD=password$1 \
+#   -e MYSQL_ROOT_PASSWORD="password\$1" \
 #   -e MYSQL_DATABASE=uranusdb \
 #   -e MYSQL_USER=uranus \
-#   -e MYSQL_PASSWORD=password$1 \
+#   -e MYSQL_PASSWORD="password\$1" \
 #   mysql:8.0

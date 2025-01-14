@@ -1,5 +1,7 @@
 package com.example.app.config;
 
+import com.example.app.config.auth.CustomUserDetails;
+import com.example.app.entity.User;
 import com.example.app.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,9 +22,13 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    UserDetailsService userDetailsService() {
-        return username -> (org.springframework.security.core.userdetails.UserDetails) userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    public UserDetailsService userDetailsService() {
+        return username -> {
+            User user = userRepository.findByEmail(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+            return new CustomUserDetails(user); // Return your custom UserDetails implementation
+        };
     }
 
     @Bean
