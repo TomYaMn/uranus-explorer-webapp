@@ -9,7 +9,11 @@ import com.example.app.repository.RoleRepository;
 import com.example.app.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -68,13 +72,54 @@ public class AuthenticationService {
     }
 
     public User authenticate(LoginUserDto input) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(input.getEmail(), input.getPassword())
-        );
+        // Check if email or username is provided for login
+        if (input.getEmail() != null && !input.getEmail().isEmpty()) {
+            // If email is provided, authenticate with email and password
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(input.getEmail(), input.getPassword())
+            );
 
-        User user = userRepository.findByEmail(input.getEmail())
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + input.getEmail()));
+            User user = userRepository.findByEmail(input.getEmail())
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + input.getEmail()));
 
-        return new CustomUserDetails(user).getUser(); // Wrap User in CustomUserDetails
+            return new CustomUserDetails(user).getUser(); // Wrap User in CustomUserDetails
+        } else if (input.getUserName() != null && !input.getUserName().isEmpty()) {
+            // If username is provided, authenticate with username and password
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(input.getUserName(), input.getPassword())
+            );
+
+            User user = userRepository.findByUsername(input.getUserName())
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + input.getUserName()));
+
+            return new CustomUserDetails(user).getUser(); // Wrap User in CustomUserDetails
+        } else {
+            throw new IllegalArgumentException("Email or Username must be provided");
+        }
     }
+
+//    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+//        String usernameOrEmail = authentication.getName();
+//        String password = authentication.getCredentials().toString();
+//
+//        // Check if the usernameOrEmail is an email
+//        boolean isEmail = usernameOrEmail.contains("@");
+//
+//        UserDetails userDetails = null;
+//        if (isEmail) {
+//            // If it's an email, authenticate using the email field
+//            userDetails = CustomUserDetailsService.loadUserByUsername(usernameOrEmail);
+//        } else {
+//            // If it's a username, authenticate using the username field
+//            userDetails = CustomUserDetailsService.loadUserByUsername(usernameOrEmail);
+//        }
+//
+//        if (userDetails == null || !passwordEncoder.matches(password, userDetails.getPassword())) {
+//            throw new BadCredentialsException("Invalid username or password");
+//        }
+//
+//        // Create and return the authentication token
+//        return new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+//    }
+
 }

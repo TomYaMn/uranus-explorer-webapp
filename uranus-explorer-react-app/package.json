@@ -10,6 +10,7 @@
     "ajv": "^8.17.1",
     "axios": "^1.7.9",
     "deps": "^1.0.0",
+    "jwt-decode": "^4.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0",
@@ -44,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "@types/jwt-decode": "^2.2.1",
     "@types/react": "^19.0.4",
     "@types/react-dom": "^19.0.2",
     "@types/react-redux": "^7.1.34",

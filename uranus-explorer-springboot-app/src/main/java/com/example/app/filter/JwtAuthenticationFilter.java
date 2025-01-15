@@ -1,58 +1,5 @@
 package com.example.app.filter;
 
-//import com.example.app.service.UserService;
-//import com.example.app.util.JwtTokenUtil;
-//import jakarta.servlet.ServletRequest;
-//import jakarta.servlet.ServletResponse;
-//import org.springframework.security.authentication.AuthenticationManager;
-//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-//import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.beans.factory.annotation.Autowired;
-//
-//import javax.servlet.Filter;
-//import javax.servlet.FilterChain;
-//import javax.servlet.FilterConfig;
-//import javax.servlet.ServletException;
-//import javax.servlet.annotation.WebFilter;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
-//import java.io.IOException;
-//
-//@WebFilter("/*")
-//public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-//
-//    private final AuthenticationManager authenticationManager;
-//    private final JwtTokenUtil jwtTokenUtil;
-//
-//    // Constructor-based injection by Spring
-//    @Autowired
-//    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil) {
-//        this.authenticationManager = authenticationManager;
-//        this.jwtTokenUtil = jwtTokenUtil;
-//    }
-//
-//    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
-//        String username = request.getParameter("username");
-//        String password = request.getParameter("password");
-//
-//        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
-//
-//        return authenticationManager.authenticate(authenticationToken);
-//    }
-//
-//    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-//        String token = jwtTokenUtil.generateToken(authResult.getName());
-//        response.setHeader("Authorization", "Bearer " + token);
-//    }
-//
-//    public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException, jakarta.servlet.ServletException {
-//        super.doFilter((ServletRequest) request, (ServletResponse) response, (jakarta.servlet.FilterChain) chain);
-//    }
-//}
-
-
 import com.example.app.auth.CustomUserDetails;
 import com.example.app.service.CustomUserDetailsService;
 import com.example.app.service.JwtService;
@@ -72,11 +19,14 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private final HandlerExceptionResolver handlerExceptionResolver;
 
+    private static final Logger logger = Logger.getLogger(JwtAuthenticationFilter.class.getName());
+
+    private final HandlerExceptionResolver handlerExceptionResolver;
     private final JwtService jwtService;
     private final CustomUserDetailsService customUserDetailsService;
 
@@ -96,24 +46,34 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
+
         final String authHeader = request.getHeader("Authorization");
 
+        // Log the Authorization header to verify the presence of the token
+        logger.info("Authorization header: " + authHeader);
+
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            logger.warning("No valid Bearer token found.");
             filterChain.doFilter(request, response);
             return;
         }
 
         try {
-            final String jwt = authHeader.substring(7);
+            final String jwt = authHeader.substring(7);  // Remove "Bearer " prefix
             final String username = jwtService.extractUsername(jwt);
 
+            // Log the extracted username for debugging
+            logger.info("Extracted username: " + username);
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
             if (username != null && authentication == null) {
+                // Load user details using the username
                 UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(username);
 
+                // Check if token is valid for the user
                 if (jwtService.isTokenValid(jwt, (CustomUserDetails) userDetails)) {
+                    logger.info("JWT is valid for user: " + username);
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,
                             null,
@@ -127,6 +87,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (Exception exception) {
+            logger.severe("Error occurred while processing JWT: " + exception.getMessage());
             handlerExceptionResolver.resolveException(request, response, null, exception);
         }
     }

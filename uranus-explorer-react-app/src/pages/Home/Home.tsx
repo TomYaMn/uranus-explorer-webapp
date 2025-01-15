@@ -4,14 +4,13 @@ import styles from "./Home.module.css";
 const Home: React.FC = () => {
   return (
     <div className={styles.container}>
-      <div className={styles.scene}>
-        <div className={styles.galaxy}>
-          <img src="/images/galaxy_spiral_1.jpg" alt="Galaxy Spiral" />
-        </div>
-        <div className={styles.uranus}>
-          <img src="/images/uranus.png" alt="Uranus" />
-        </div>
-      </div>
+      <header className={styles.header}>
+        <h1>Welcome to Our Platform</h1>
+        <nav className={styles.nav}>
+          <a href="/signup" className={styles.link}>Sign Up</a>
+          <a href="/login" className={styles.link}>Login</a>
+        </nav>
+      </header>
     </div>
   );
 };
