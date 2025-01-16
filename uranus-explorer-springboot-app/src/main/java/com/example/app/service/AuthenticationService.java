@@ -1,5 +1,6 @@
 package com.example.app.service;
 
+import com.example.app.auth.CustomAuthenticationProvider;
 import com.example.app.dto.LoginUserDto;
 import com.example.app.dto.RegisterUserDto;
 import com.example.app.auth.CustomUserDetails;
@@ -25,15 +26,15 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository; // RoleRepository to manage roles
     private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
+    private final CustomAuthenticationProvider customAuthenticationProvider;
 
     public AuthenticationService(
             UserRepository userRepository,
             RoleRepository roleRepository, // Inject RoleRepository
-            AuthenticationManager authenticationManager,
+            CustomAuthenticationProvider customAuthenticationProvider,
             PasswordEncoder passwordEncoder
     ) {
-        this.authenticationManager = authenticationManager;
+        this.customAuthenticationProvider = customAuthenticationProvider;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
@@ -72,30 +73,28 @@ public class AuthenticationService {
     }
 
     public User authenticate(LoginUserDto input) {
-        // Check if email or username is provided for login
-        if (input.getEmail() != null && !input.getEmail().isEmpty()) {
-            // If email is provided, authenticate with email and password
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(input.getEmail(), input.getPassword())
-            );
+        if (input == null) {
+            throw new IllegalArgumentException("Input cannot be null");
+        }
 
-            User user = userRepository.findByEmail(input.getEmail())
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + input.getEmail()));
-
-            return new CustomUserDetails(user).getUser(); // Wrap User in CustomUserDetails
-        } else if (input.getUserName() != null && !input.getUserName().isEmpty()) {
-            // If username is provided, authenticate with username and password
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(input.getUserName(), input.getPassword())
-            );
-
-            User user = userRepository.findByUsername(input.getUserName())
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + input.getUserName()));
-
-            return new CustomUserDetails(user).getUser(); // Wrap User in CustomUserDetails
-        } else {
+        if ((input.getEmail() == null || input.getEmail().isEmpty()) &&
+                (input.getUserName() == null || input.getUserName().isEmpty())) {
             throw new IllegalArgumentException("Email or Username must be provided");
         }
+
+        String identifier = (input.getEmail() != null) ? input.getEmail() : input.getUserName();
+
+        customAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken(identifier, input.getPassword())
+        );
+
+        User user = (input.getEmail() != null) ?
+                userRepository.findByEmail(input.getEmail())
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + input.getEmail())) :
+                userRepository.findByUsername(input.getUserName())
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + input.getUserName()));
+
+        return user; // Return the user entity directly
     }
 
 //    public Authentication authenticate(Authentication authentication) throws AuthenticationException {

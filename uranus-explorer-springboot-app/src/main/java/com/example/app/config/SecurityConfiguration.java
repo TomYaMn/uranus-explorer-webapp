@@ -30,51 +30,36 @@ public class SecurityConfiguration {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http.csrf()
-//                .disable()
-//                .authorizeHttpRequests()
-//                .requestMatchers("/api/auth/**")
-//                .permitAll()  // Make sure /auth/** is publicly accessible
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .authenticationProvider(authenticationProvider)
-//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-//
-//        return http.build();
-//    }
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .requestMatchers("/api/auth/login").permitAll()  // Allow login without authentication
-                .anyRequest().authenticated()  // Protect all other routes
+                // Allow public access to login and registration endpoints
+                .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/register").permitAll()
+                // Protect all other routes
+                .anyRequest().authenticated()
                 .and()
+                // Use the custom authentication provider
                 .authenticationProvider(authenticationProvider)
+                // Add JWT filter before the username-password authentication filter
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                // Set session management to stateless
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Disable session state for stateless JWT authentication
-
-                // Enable CORS handling here
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .cors().configurationSource(corsConfigurationSource());  // CORS configuration
+                // Enable CORS
+                .cors().configurationSource(corsConfigurationSource());
 
         return http.build();
     }
 
-    // CORS Configuration to allow frontend requests
+    // Configure CORS to allow frontend requests
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3001"));  // React frontend
-        configuration.setAllowedMethods(List.of("GET", "POST", "OPTIONS"));  // Handle OPTIONS method
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        configuration.setAllowedOrigins(List.of("http://localhost:3001"));  // Your React frontend
+        configuration.setAllowedMethods(List.of("GET", "POST", "OPTIONS"));  // Include OPTIONS for CORS preflight
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));  // Allow necessary headers
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
