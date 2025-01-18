@@ -1,57 +1,55 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: var(--background-color);
+  background-color: var(--background-color-dark);
   color: var(--text-color-light);
   padding: 20px;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 100%;
-  max-width: 400px;
-  padding: 20px;
-  background-color: var(--neutral-dark);
-  border-radius: 10px;
+  border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .inputField {
   width: 100%;
   padding: 10px;
-  font-size: 1rem;
-  border: 1px solid var(--neutral-light);
-  border-radius: 5px;
-  background-color: var(--background-color);
-  color: var(--text-color-light);
-}
-
-.inputField::placeholder {
-  color: var(--neutral-light);
-}
-
-.button {
-  padding: 10px;
-  font-size: 1rem;
-  background-color: var(--primary-color);
-  border: none;
-  border-radius: 5px;
+  margin: 10px 0;
+  border: 1px solid var(--secondary-color);
+  border-radius: 4px;
+  background-color: var(--neutral-light);
   color: var(--text-color-dark);
-  cursor: pointer;
-  transition: background-color 0.3s;
+  font-size: 1rem;
 }
 
-.button:hover {
-  background-color: var(--primary-hover);
+.toggleButton {
+  padding: 10px;
+  margin: 5px;
+  border: none;
+  background-color: var(--secondary-color);
+  color: var(--text-color-light);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.toggleButton.active {
+  background-color: var(--primary-color);
 }
 
 .error {
   color: var(--error-color);
+  margin-bottom: 10px;
+}
+
+.link {
+  margin-top: 10px;
   font-size: 0.9rem;
-  text-align: center;
+}
+
+.linkText {
+  color: var(--primary-color);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.linkText:hover {
+  text-decoration: underline;
 }

@@ -4,7 +4,8 @@
     --primary-color: #BBE1FA; /* Blue */
     --secondary-color: #3282B8; /* Gray */
     --tertiary-color: #0F4C75; /* Green */
-    --background-color: #1B262C; /* Dark background */
+    --background-color-dark: #1B262C; /* Dark background */
+    --background-color-light: #d5dadc; /* Dark background */
     --text-color-dark: #1c1c1c; /* Dark text */
     --text-color-light: #fdfdfd; /* Light text */
   
@@ -33,7 +34,7 @@
     -moz-osx-font-smoothing: grayscale;
     margin: 0;
     padding: 0;
-    background-color: var(--background-color);
+    background-color: var(--background-color-light);
     color: var(--text-color-light);
   }
   
@@ -42,3 +43,23 @@
       monospace;
   }
   
+  a {
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  button {
+    color: #fff;
+    background-color: var(--primary-color);
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: darken(var(--primary-color), 10%);
+  }

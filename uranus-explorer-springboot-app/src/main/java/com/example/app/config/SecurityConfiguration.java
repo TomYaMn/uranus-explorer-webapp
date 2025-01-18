@@ -35,7 +35,7 @@ public class SecurityConfiguration {
         http.csrf().disable()
                 .authorizeRequests()
                 // Allow public access to login and registration endpoints
-                .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/register").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/signup").permitAll()
                 // Protect all other routes
                 .anyRequest().authenticated()
                 .and()

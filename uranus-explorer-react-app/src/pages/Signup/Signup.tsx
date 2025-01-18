@@ -1,18 +1,48 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { userSignUp } from "../../redux/actions/authActions";
-import styles from "./Signup.module.css"; // Importing the module CSS
+import Popup from "../../components/Popup/Popup";
+import Button from "../../components/Button/Button";
+import styles from "./Signup.module.css";
 
 const SignUp: React.FC = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupType, setPopupType] = useState<"success" | "error" | null>(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleSignUp = () => {
-    // Simulate API call for user registration
-    dispatch(userSignUp({ username, email, token: "newToken" }));
+  const handleSignUp = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/signup`, {  // Fixed here
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, email, password }),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to create account.");
+      }
+  
+      const data = await response.json();
+      dispatch(userSignUp({ username: data.username, email: data.email, token: data.token }));
+  
+      setPopupMessage("Account created successfully!");
+      setPopupType("success");
+  
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    } catch (error: any) {
+      setPopupMessage(error.message || "There was a problem creating your account. Please try again.");
+      setPopupType("error");
+    }
   };
+  
 
   return (
     <div className={styles.container}>
@@ -38,9 +68,22 @@ const SignUp: React.FC = () => {
         onChange={(e) => setPassword(e.target.value)}
         className={styles.inputField}
       />
-      <button onClick={handleSignUp} className={styles.button}>
-        Sign Up
-      </button>
+      <Button label="Sign Up" onClick={handleSignUp} />
+
+      {popupType && (
+        <Popup
+          message={popupMessage}
+          type={popupType}
+          onClose={() => setPopupType(null)}
+        />
+      )}
+
+      <p className={styles.link}>
+        Already have an account?{" "}
+        <span onClick={() => navigate("/login")} className={styles.linkText}>
+          Login
+        </span>
+      </p>
     </div>
   );
 };

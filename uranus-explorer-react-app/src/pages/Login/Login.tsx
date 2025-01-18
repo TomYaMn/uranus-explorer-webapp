@@ -2,31 +2,40 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin, userAuthError } from "../../redux/actions/authActions";
 import axios from "axios";
-import styles from "./Login.module.css"; // Importing the module CSS
-import Button from "../../components/Button/Button"; // Import the Button component
+import { useNavigate } from "react-router-dom";
+import styles from "./Login.module.css";
+import Button from "../../components/Button/Button";
+import Popup from "../../components/Popup/Popup";
 
 const Login: React.FC = () => {
-  const [emailOrUsername, setEmailOrUsername] = useState(""); // State for input
+  const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isEmailLogin, setIsEmailLogin] = useState(true); // Flag to toggle between email and username login
-  const dispatch = useDispatch();
+  const [isEmailLogin, setIsEmailLogin] = useState(true);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupType, setPopupType] = useState<"success" | "error">("error");
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const authError = useSelector((state: any) => state.auth.error);
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://localhost:8080/api/auth/login", {
-        [isEmailLogin ? "email" : "userName"]: emailOrUsername, // Conditional key based on login type
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, {
+        [isEmailLogin ? "email" : "userName"]: emailOrUsername,
         password,
       });
 
-      // Dispatching action to save user info and token after successful login
       dispatch(userLogin({ username: response.data.username, token: response.data.token }));
-      localStorage.setItem('authToken', response.data.token); // Save token to localStorage
-      // const token = localStorage.getItem('authToken');
-
+      sessionStorage.setItem("authToken", response.data.token);
+      setPopupMessage("Login successful!");
+      setPopupType("success");
+      setShowPopup(true);
     } catch (error) {
       dispatch(userAuthError("Invalid credentials"));
+      setPopupMessage("Invalid credentials. Please try again.");
+      setPopupType("error");
+      setShowPopup(true);
     }
   };
 
@@ -34,27 +43,23 @@ const Login: React.FC = () => {
     <div className={styles.container}>
       <h2>Login</h2>
       {authError && <p className={styles.error}>{authError}</p>}
-      
-      {/* Toggle button to switch between email/username */}
       <div>
-        <button 
-          onClick={() => setIsEmailLogin(true)} 
+        <button
+          onClick={() => setIsEmailLogin(true)}
           className={`${styles.toggleButton} ${isEmailLogin ? styles.active : ""}`}
         >
           Use Email
         </button>
-        <button 
-          onClick={() => setIsEmailLogin(false)} 
+        <button
+          onClick={() => setIsEmailLogin(false)}
           className={`${styles.toggleButton} ${!isEmailLogin ? styles.active : ""}`}
         >
           Use Username
         </button>
       </div>
-
-      {/* Input field changes based on selected login method */}
       <input
         type="text"
-        placeholder={isEmailLogin ? "Email" : "Username"} // Conditional placeholder
+        placeholder={isEmailLogin ? "Email" : "Username"}
         value={emailOrUsername}
         onChange={(e) => setEmailOrUsername(e.target.value)}
         className={styles.inputField}
@@ -66,9 +71,20 @@ const Login: React.FC = () => {
         onChange={(e) => setPassword(e.target.value)}
         className={styles.inputField}
       />
-      
-      {/* Using the custom Button component */}
       <Button label="Login" onClick={handleLogin} />
+      <p className={styles.link}>
+        Don't have an account yet?{" "}
+        <span onClick={() => navigate("/signup")} className={styles.linkText}>
+          Sign up
+        </span>
+      </p>
+      {showPopup && (
+        <Popup
+          message={popupMessage}
+          type={popupType}
+          onClose={() => setShowPopup(false)}
+        />
+      )}
     </div>
   );
 };
