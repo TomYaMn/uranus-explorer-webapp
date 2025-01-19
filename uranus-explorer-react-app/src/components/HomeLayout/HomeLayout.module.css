@@ -1,0 +1,5 @@
+.mainContent {
+  /* margin-left: 60px; */
+  padding: 20px;
+  width: calc(100% - 60px); /* Ensure content doesn't get hidden behind the side nav */
+}

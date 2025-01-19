@@ -1,0 +1,75 @@
+/* SideNav*/
+.sideNav {
+  position: fixed; /* This will make the sideNav's position relative to itself, but doesn't affect ::after */
+  top: 0;
+  bottom: 0;
+  left: -11rem; 
+  width: fit-content;
+  background-color: var(--neutral-dark);
+  padding: 1rem;
+  transition: transform 0.1s ease-in-out;
+  z-index: 1;
+}
+
+/* Position the ::after pseudo-element relative to the root */
+.sideNav::after {
+  content: "☰";
+  opacity: 70%;
+  position: fixed;
+  top: 2rem;
+  left: 0;
+  padding: 0.3rem;
+  color: var(--text-color-light);
+  background-color: var(--neutral-dark);
+  font-size: 2rem;
+  text-align: center;
+  cursor: pointer;
+  z-index: 0; 
+}
+
+.sideNav:hover {
+  width: 11rem; /* Expand width to show the links */
+  transform: translateX(11rem); 
+}
+
+/* When hovering over .sideNav, hide the icon and show the links */
+.sideNav:hover::after {
+  content: "";  /* Remove the icon when hovering */
+  padding: 0;
+}
+
+
+
+/* When hovering over the button, move the SideNav */
+/* .visualButton:hover + .sideNav {
+  transform: translateX(250px); 
+} */
+
+/* SideNav List */
+.sideNavList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sideNavItem {
+  margin-bottom: 15px;
+}
+
+
+/* SideNavButton */
+.sideNavButton {
+  background-color: var(--neutral-dark);
+  color: var(--text-color-light);
+  font-size: 18px;
+  text-align: left;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  padding: 10px;
+  transition: color 0.3s ease;
+}
+
+.sideNavButton:hover {
+  color: var(--text-color-dark); 
+}

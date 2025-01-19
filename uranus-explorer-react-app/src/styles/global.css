@@ -1,28 +1,28 @@
 /* global.css */
 :root {
-    /* Core Theme */
-    --primary-color: #BBE1FA; /* Blue */
-    --secondary-color: #3282B8; /* Gray */
-    --tertiary-color: #0F4C75; /* Green */
-    --background-color-dark: #1B262C; /* Dark background */
-    --background-color-light: #d5dadc; /* Dark background */
-    --text-color-dark: #1c1c1c; /* Dark text */
-    --text-color-light: #fdfdfd; /* Light text */
-  
-    /* Neutrals */
-    --neutral-light: #E0E0E0;
-    --neutral-dark: #404040;
-  
-    /* Feedback Colors */
-    --error-color: #E63946; /* Red */
-    --success-color: #06D6A0; /* Green */
-    --warning-color: #FFD166; /* Yellow */
-  
-    /* Hover and Active */
-    --primary-hover: #A7CCE6; /* Slightly darker blue */
-    --secondary-hover: #296B91; /* Slightly darker gray */
-    --tertiary-hover: #09344D; /* Slightly darker green */
-  }
+  /* Core Theme */
+  --primary-color: #BBE1FA; /* Blue */
+  --secondary-color: #3282B8; /* Gray */
+  --tertiary-color: #0F4C75; /* Green */
+  --background-color-dark: #1B262C; /* Dark background */
+  --background-color-light: #d5dadc; /* Light background */
+  --text-color-dark: #1c1c1c; /* Dark text */
+  --text-color-light: #fdfdfd; /* Light text */
+
+  /* Neutrals */
+  --neutral-light: #E0E0E0;
+  --neutral-dark: #404040;
+
+  /* Feedback Colors */
+  --error-color: #E63946; /* Red */
+  --success-color: #06D6A0; /* Green */
+  --warning-color: #FFD166; /* Yellow */
+
+  /* Hover and Active */
+  --primary-hover: #A7CCE6; /* Slightly darker blue */
+  --secondary-hover: #296B91; /* Slightly darker gray */
+  --tertiary-hover: #09344D; /* Slightly darker green */
+}
   
 
   body {
@@ -34,7 +34,7 @@
     -moz-osx-font-smoothing: grayscale;
     margin: 0;
     padding: 0;
-    background-color: var(--background-color-light);
+    background-color: var(--background-color-dark);
     color: var(--text-color-light);
   }
   

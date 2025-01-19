@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import jwtDecode from "jwt-decode";
 import Home from "../pages/Home";
 import Dashboard from "../pages/Dashboard";
 import Profile from "../pages/Profile";
@@ -17,17 +16,12 @@ const AuthenticatedRoutes: React.FC = () => (
   </Routes>
 );
 
-const UnauthenticatedRoutes: React.FC = () => (
-  <Routes>
-    <Route path="/login" element={<Login />} />
-    <Route path="/signup" element={<Signup />} />
-    <Route path="*" element={<Navigate to="/" />} /> {/* Redirect to Home */}
-  </Routes>
-);
-
 const PublicRoutes: React.FC = () => (
   <Routes>
     <Route path="/" element={<Home />} />
+    <Route path="/login" element={<Login />} />
+    <Route path="/signup" element={<Signup />} />
+    <Route path="*" element={<Navigate to="/" />} /> {/* Redirect to Home */}
   </Routes>
 );
 
@@ -36,8 +30,8 @@ const AppRoutes: React.FC = () => {
   
   return (
     <Router>
-      {authenticated ? <AuthenticatedRoutes /> : <UnauthenticatedRoutes />}
-      <PublicRoutes />
+      {authenticated ? <AuthenticatedRoutes /> : <PublicRoutes />}
+      
     </Router>
   );
 };

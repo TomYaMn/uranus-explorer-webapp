@@ -1,5 +1,6 @@
 package com.example.app.config;
 
+import com.example.app.auth.CustomAuthenticationProvider;
 import com.example.app.filter.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,28 +20,30 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
-    private final AuthenticationProvider authenticationProvider;
+    private final CustomAuthenticationProvider customAuthenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     public SecurityConfiguration(
             JwtAuthenticationFilter jwtAuthenticationFilter,
-            AuthenticationProvider authenticationProvider
+            CustomAuthenticationProvider customAuthenticationProvider
     ) {
-        this.authenticationProvider = authenticationProvider;
+        this.customAuthenticationProvider = customAuthenticationProvider;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests()
+                .authorizeHttpRequests()
                 // Allow public access to login and registration endpoints
                 .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/signup").permitAll()
+//                .requestMatchers(HttpMethod.GET, "/api/auth/me").permitAll()  // Add this line for testing
+
                 // Protect all other routes
                 .anyRequest().authenticated()
                 .and()
                 // Use the custom authentication provider
-                .authenticationProvider(authenticationProvider)
+                .authenticationProvider(customAuthenticationProvider)
                 // Add JWT filter before the username-password authentication filter
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 // Set session management to stateless
