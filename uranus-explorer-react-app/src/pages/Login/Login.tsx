@@ -22,7 +22,7 @@ const Login: React.FC = () => {
   const handleLogin = async () => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, {
-        [isEmailLogin ? "email" : "userName"]: emailOrUsername,
+        [isEmailLogin ? "email" : "username"]: emailOrUsername,
         password,
       });
 
@@ -31,6 +31,11 @@ const Login: React.FC = () => {
       setPopupMessage("Login successful!");
       setPopupType("success");
       setShowPopup(true);
+
+      // Wait for the popup to display, then navigate
+      setTimeout(() => {
+        navigate("/home"); // Adjust path as necessary
+      }, 2000); // 2 seconds delay
     } catch (error) {
       dispatch(userAuthError("Invalid credentials"));
       setPopupMessage("Invalid credentials. Please try again.");

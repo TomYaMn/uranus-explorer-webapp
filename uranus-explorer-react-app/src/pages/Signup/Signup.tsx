@@ -12,37 +12,45 @@ const SignUp: React.FC = () => {
   const [password, setPassword] = useState("");
   const [popupMessage, setPopupMessage] = useState("");
   const [popupType, setPopupType] = useState<"success" | "error" | null>(null);
+  const [isLoading, setIsLoading] = useState(false); // To handle loading state
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSignUp = async () => {
+    if (!username || !email || !password) {
+      setPopupMessage("All fields are required.");
+      setPopupType("error");
+      return;
+    }
+    
+    setIsLoading(true); // Start loading
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/signup`, {  // Fixed here
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password }),
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || "Failed to create account.");
       }
-  
+
       const data = await response.json();
       dispatch(userSignUp({ username: data.username, email: data.email, token: data.token }));
-  
       setPopupMessage("Account created successfully!");
       setPopupType("success");
-  
+
       setTimeout(() => {
         navigate("/login");
       }, 2000);
     } catch (error: any) {
       setPopupMessage(error.message || "There was a problem creating your account. Please try again.");
       setPopupType("error");
+    } finally {
+      setIsLoading(false); // Stop loading
     }
   };
-  
 
   return (
     <div className={styles.container}>
@@ -68,7 +76,7 @@ const SignUp: React.FC = () => {
         onChange={(e) => setPassword(e.target.value)}
         className={styles.inputField}
       />
-      <Button label="Sign Up" onClick={handleSignUp} />
+      <Button label={isLoading ? "Signing Up..." : "Sign Up"} onClick={handleSignUp} disabled={isLoading} />
 
       {popupType && (
         <Popup

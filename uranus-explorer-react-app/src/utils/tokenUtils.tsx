@@ -2,7 +2,7 @@ import { jwtDecode } from "jwt-decode";
 import { JwtPayload } from "../interfaces/JwtPayload";
 
 export const isAuthenticated = (): boolean => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("authToken");
   if (!token) return false;
 
   try {

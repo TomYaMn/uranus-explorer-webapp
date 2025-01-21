@@ -1,10 +1,12 @@
 package com.example.app.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class RegisterUserDto {
     private String email;
 
     private String password;
-
+    @JsonProperty("username")
     private String userName;
 
     public String getEmail() {
