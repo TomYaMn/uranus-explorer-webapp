@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Create 'services' table -->
+    <changeSet id="1-create-services" author="TomYaMn">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="services"/>
+            </not>
+        </preConditions>
+        <createTable tableName="services">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="category" type="VARCHAR(155)">
+                <constraints nullable="false" unique="true" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Create 'service_items' table -->
+    <changeSet id="1-create-service-items" author="TomYaMn">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="service_items"/>
+            </not>
+        </preConditions>
+        <createTable tableName="service_items">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="service_id" type="BIGINT">
+                <constraints nullable="false" />
+            </column>
+            <column name="item" type="VARCHAR(155)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+    
+<changeSet id="4-create-formfield" author="TomYaMn">
+    <preConditions onFail="MARK_RAN">
+        <not>
+            <tableExists tableName="form_field"/>
+        </not>
+    </preConditions>
+    <createTable tableName="form_field">
+        <column name="id" type="BIGINT" autoIncrement="true">
+            <constraints primaryKey="true" nullable="false" />
+        </column>
+        <column name="field_name" type="VARCHAR(155)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="field_type" type="VARCHAR(155)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="is_required" type="BOOLEAN" defaultValue="false">
+            <constraints nullable="false"/>
+        </column>
+    </createTable>
+</changeSet>
+
+    <!-- Add foreign key constraint -->
+    <changeSet id="1" author="TomYaMn">
+        <addForeignKeyConstraint
+            baseTableName="service_items"
+            baseColumnNames="service_id"
+            referencedTableName="services"
+            referencedColumnNames="id"
+            constraintName="fk_service_items_to_services" />
+    </changeSet>
+
+    <!-- <changeSet id="4" author="your-name">
+        <insert tableName="services">
+            <column name="id" value="1" />
+            <column name="category" value="Web Development" />
+        </insert>
+        <insert tableName="services">
+            <column name="id" value="1" />
+            <column name="category" value="Graphic Design" />
+        </insert>
+        <insert tableName="service_items">
+            <column name="id" value="1" />
+            <column name="service_id" value="1" />
+            <column name="item" value="Frontend Development" />
+        </insert>
+        <insert tableName="service_items">
+            <column name="id" value="1" />
+            <column name="service_id" value="1" />
+            <column name="item" value="Backend Development" />
+        </insert>
+        <insert tableName="service_items">
+            <column name="id" value="3" />
+            <column name="service_id" value="2" />
+            <column name="item" value="Logo Design" />
+        </insert>
+    </changeSet> -->
+</databaseChangeLog>

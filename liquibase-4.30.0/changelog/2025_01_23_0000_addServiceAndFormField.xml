@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Populate Services Table -->
+    <changeSet id="1-populate-service" author="TomYaMn">
+        <insert tableName="services">
+            <column name="id" value="1" />
+            <column name="category" value="Registration and Booking" />
+        </insert>
+        <insert tableName="services">
+            <column name="id" value="2" />
+            <column name="category" value="Information and Education" />
+        </insert>
+        <insert tableName="services">
+            <column name="id" value="3" />
+            <column name="category" value="Pre-Departure Preparations" />
+        </insert>
+        <insert tableName="services">
+            <column name="id" value="4" />
+            <column name="category" value="Communication and Community" />
+        </insert>
+        <insert tableName="services">
+            <column name="id" value="5" />
+            <column name="category" value="Personalization Options" />
+        </insert>
+        <insert tableName="services">
+            <column name="id" value="6" />
+            <column name="category" value="On-Mission Features" />
+        </insert>
+        <insert tableName="services">
+            <column name="id" value="7" />
+            <column name="category" value="Post-Mission Services" />
+        </insert>
+    </changeSet>
+
+    <!-- Populate Service Items Table -->
+    <changeSet id="1-populate-service-item" author="TomYaMn">
+        <insert tableName="service_items">
+            <column name="service_id" value="1" />
+            <column name="item" value="Sign-Up for Exploration: Register for the Uranus exploration program." />
+        </insert>
+        <insert tableName="service_items">
+            <column name="service_id" value="1" />
+            <column name="item" value="Seat Selection: Choose your preferred seat on the spacecraft." />
+        </insert>
+        <insert tableName="service_items">
+            <column name="service_id" value="1" />
+            <column name="item" value="Package Customization: Tailor your exploration package based on your interests." />
+        </insert>
+        <insert tableName="service_items">
+            <column name="service_id" value="1" />
+            <column name="item" value="Secure Payment Portal: Make payments securely for registrations, upgrades, and extras." />
+        </insert>
+
+        <insert tableName="service_items">
+            <column name="service_id" value="2" />
+            <column name="item" value="Mission Overview: Access detailed information about the exploration mission." />
+        </insert>
+        <insert tableName="service_items">
+            <column name="service_id" value="2" />
+            <column name="item" value="Virtual Uranus Tour: Explore Uranus and its moons in 3D or VR." />
+        </insert>
+        <insert tableName="service_items">
+            <column name="service_id" value="2" />
+            <column name="item" value="Astronomy Learning Hub: Learn about Uranus and space exploration through videos, articles, and webinars." />
+        </insert>
+
+        <insert tableName="service_items">
+            <column name="service_id" value="3" />
+            <column name="item" value="Health Assessment Submission: Upload medical records and receive clearance for space travel." />
+        </insert>
+        <insert tableName="service_items">
+            <column name="service_id" value="3" />
+            <column name="item" value="Training Modules: Access e-learning resources to prepare for space travel." />
+        </insert>
+        <insert tableName="service_items">
+            <column name="service_id" value="3" />
+            <column name="item" value="Gear and Equipment Store: Purchase exploration essentials, such as space suits and gadgets." />
+        </insert>
+    </changeSet>
+
+    <!-- Populate Form Field Table -->
+<changeSet id="2-populate-formfield" author="TomYaMn">
+    <!-- Form fields for Registration and Booking -->
+    <insert tableName="form_field">
+        <column name="service_id" value="1" />
+        <column name="field_name" value="Full Name" />
+        <column name="field_type" value="text" />
+        <column name="is_required" valueBoolean="true" />
+    </insert>
+    <insert tableName="form_field">
+        <column name="service_id" value="1" />
+        <column name="field_name" value="Email Address" />
+        <column name="field_type" value="email" />
+        <column name="is_required" valueBoolean="true" />
+    </insert>
+    <insert tableName="form_field">
+        <column name="service_id" value="1" />
+        <column name="field_name" value="Phone Number" />
+        <column name="field_type" value="tel" />
+        <column name="is_required" valueBoolean="false" />
+    </insert>
+
+    <!-- Form fields for Information and Education -->
+    <insert tableName="form_field">
+        <column name="service_id" value="2" />
+        <column name="field_name" value="Name" />
+        <column name="field_type" value="text" />
+        <column name="is_required" valueBoolean="true" />
+    </insert>
+    <insert tableName="form_field">
+        <column name="service_id" value="2" />
+        <column name="field_name" value="Preferred Language" />
+        <column name="field_type" value="dropdown" />
+        <column name="is_required" valueBoolean="false" />
+    </insert>
+
+    <!-- Form fields for Pre-Departure Preparations -->
+    <insert tableName="form_field">
+        <column name="service_id" value="3" />
+        <column name="field_name" value="Medical Records" />
+        <column name="field_type" value="file" />
+        <column name="is_required" valueBoolean="true" />
+    </insert>
+    <insert tableName="form_field">
+        <column name="service_id" value="3" />
+        <column name="field_name" value="Emergency Contact Information" />
+        <column name="field_type" value="text" />
+        <column name="is_required" valueBoolean="true" />
+    </insert>
+</changeSet>
+
+</databaseChangeLog>
