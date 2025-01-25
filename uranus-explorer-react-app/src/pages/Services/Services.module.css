@@ -1,67 +1,86 @@
 .Services {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-    font-family: "Arial", sans-serif;
-    color: var(--text-color-dark);
-    background-color: var(--background-color-dark);
-  }
-  
-  .title {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    color: var(--primary-color);
-  }
-  
-  .card {
-    margin-bottom: 2rem;
-    border: 1px solid var(--neutral-dark);
-    border-radius: 8px;
-    background-color: var(--tertiary-color);
-    padding: 1.5rem;
-  }
-  
-  .serviceContent {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1.5rem;
-  }
-  
-  .columnOne {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-  }
-  
-  .categoryTitle {
-    font-size: 1.8rem;
-    color: var(--text-color-light);
-    margin-bottom: 1rem;
-  }
-  
-  .columnTwo {
-    flex: 2;
-  }
-  
-  .serviceList {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .serviceItem {
-    font-size: 1.2rem;
-    line-height: 1.8;
-    color: var(--text-color-light);
-    margin-bottom: 0.5rem;
-  }
-  
-  .serviceItem::before {
-    content: "✓ ";
-    color: var(--primary-color);
-  }
-  
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: "Arial", sans-serif;
+  color: var(--text-color-dark);
+  background-color: var(--background-color-dark);
+}
+
+.title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: var(--primary-color);
+}
+
+.card {
+  margin-bottom: 2rem;
+  border: 1px solid var(--neutral-dark);
+  border-radius: 8px;
+  background-color: var(--tertiary-color);
+  padding: 1.5rem;
+}
+
+.serviceContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.columnOne {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.categoryTitle {
+  font-size: 1.8rem;
+  color: var(--text-color-light);
+  margin-bottom: 1rem;
+}
+
+.columnTwo {
+  flex: 2;
+}
+
+.serviceList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.serviceItem {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--text-color-light);
+  margin-bottom: 0.5rem;
+}
+
+.serviceItem::before {
+  content: "✓ ";
+  color: var(--primary-color);
+}
+
+/* Added styles for "Loading..." message */
+.loading {
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--text-color-light);
+  margin-bottom: 2rem;
+}
+
+/* Added styles for "No services available" message */
+.noServices {
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--secondary-color);
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: var(--tertiary-color);
+  border: 1px dashed var(--neutral-dark);
+  border-radius: 8px;
+}

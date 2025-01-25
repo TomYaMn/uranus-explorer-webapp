@@ -3,15 +3,14 @@ package com.example.app.dto;
 import java.util.List;
 
 public class ServiceDto {
-
     private String category;
     private List<FormField> formFields;
-    private String formTitle;
+    private List<ServiceItemDto> serviceItems; // Use ServiceItemDto here
 
-    public ServiceDto(String category, List<FormField> formFields, String formTitle) {
+    public ServiceDto(String category, List<FormField> formFields, List<ServiceItemDto> serviceItems) {
         this.category = category;
         this.formFields = formFields;
-        this.formTitle = formTitle;
+        this.serviceItems = serviceItems;
     }
 
     public String getCategory() {
@@ -30,14 +29,15 @@ public class ServiceDto {
         this.formFields = formFields;
     }
 
-    public String getFormTitle() {
-        return formTitle;
+    public List<ServiceItemDto> getServiceItems() {
+        return serviceItems;
     }
 
-    public void setFormTitle(String formTitle) {
-        this.formTitle = formTitle;
+    public void setServiceItems(List<ServiceItemDto> serviceItems) {
+        this.serviceItems = serviceItems;
     }
 
+    // Nested FormField DTO class (if you don't have this already)
     public static class FormField {
         private String fieldName;
         private String fieldType;
@@ -72,7 +72,22 @@ public class ServiceDto {
         public void setRequired(boolean required) {
             isRequired = required;
         }
+    }
 
-// Getters and Setters
+    // Nested ServiceItemDto class
+    public static class ServiceItemDto {
+        private String item;
+
+        public ServiceItemDto(String item) {
+            this.item = item;
+        }
+
+        public String getItem() {
+            return item;
+        }
+
+        public void setItem(String item) {
+            this.item = item;
+        }
     }
 }

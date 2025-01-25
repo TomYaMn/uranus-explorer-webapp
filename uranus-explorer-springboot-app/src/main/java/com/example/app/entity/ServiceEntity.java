@@ -1,19 +1,26 @@
 package com.example.app.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.util.List;
 
 @Entity
-@Table(name = "services") // Specify the table name as "service"
+@Table(name = "services")
 public class ServiceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String category;
-    private String formTitle;
 
     @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SUBSELECT)
+    private List<ServiceItem> serviceItems;
+
+    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SUBSELECT)
     private List<FormField> formFields;
 
     public Long getId() {
@@ -32,12 +39,12 @@ public class ServiceEntity {
         this.category = category;
     }
 
-    public String getFormTitle() {
-        return formTitle;
+    public List<ServiceItem> getServiceItems() {
+        return serviceItems;
     }
 
-    public void setFormTitle(String formTitle) {
-        this.formTitle = formTitle;
+    public void setServiceItems(List<ServiceItem> serviceItems) {
+        this.serviceItems = serviceItems;
     }
 
     public List<FormField> getFormFields() {

@@ -38,7 +38,7 @@
     </changeSet>
 
     <!-- Populate Service Items Table -->
-    <changeSet id="1-populate-service-item" author="TomYaMn">
+    <changeSet id="3-populate-service-item" author="TomYaMn">
         <insert tableName="service_items">
             <column name="service_id" value="1" />
             <column name="item" value="Sign-Up for Exploration: Register for the Uranus exploration program." />
@@ -81,57 +81,233 @@
             <column name="service_id" value="3" />
             <column name="item" value="Gear and Equipment Store: Purchase exploration essentials, such as space suits and gadgets." />
         </insert>
+                <insert tableName="service_items">
+            <column name="service_id" value="4" />
+            <column name="item" value="Live Chat Support: Get real-time assistance for your queries." />
+        </insert>
+        <insert tableName="service_items">
+            <column name="service_id" value="4" />
+            <column name="item" value="Explorer Forums: Connect with fellow participants and share experiences." />
+        </insert>
+        <insert tableName="service_items">
+            <column name="service_id" value="4" />
+            <column name="item" value="Event Notifications: Stay updated with mission schedules and announcements." />
+        </insert>
+        <insert tableName="service_items">
+            <column name="service_id" value="5" />
+            <column name="item" value="Mission Customization: Select your preferred exploration theme (e.g., research, adventure, luxury)." />
+        </insert>
+        <insert tableName="service_items">
+            <column name="service_id" value="5" />
+            <column name="item" value="Travel Journals: Document your journey with photos and stories." />
+        </insert>
+        <insert tableName="service_items">
+            <column name="service_id" value="5" />
+            <column name="item" value="Custom Souvenirs: Order personalized merchandise, such as patches or certificates." />
+        </insert>
+        <insert tableName="service_items">
+            <column name="service_id" value="6" />
+            <column name="item" value="Live Mission Tracking: Monitor spacecraft progress and conditions in real time." />
+        </insert>
+        <insert tableName="service_items">
+            <column name="service_id" value="6" />
+            <column name="item" value="Daily Mission Updates: Receive news and milestones about the journey." />
+        </insert>
+        <insert tableName="service_items">
+            <column name="service_id" value="6" />
+            <column name="item" value="Family Live Streaming: Share launch and mission updates with loved ones." />
+        </insert>
+        <insert tableName="service_items">
+            <column name="service_id" value="7" />
+            <column name="item" value="Completion Certificates: Download your official mission participation certificate." />
+        </insert>
+        <insert tableName="service_items">
+            <column name="service_id" value="7" />
+            <column name="item" value="Feedback Portal: Provide feedback to help improve future missions." />
+        </insert>
+        <insert tableName="service_items">
+            <column name="service_id" value="7" />
+            <column name="item" value="Alumni Network Access: Join the exclusive community of Uranus explorers for discounts and special events." />
+        </insert>
     </changeSet>
 
     <!-- Populate Form Field Table -->
-<changeSet id="2-populate-formfield" author="TomYaMn">
-    <!-- Form fields for Registration and Booking -->
-    <insert tableName="form_field">
-        <column name="service_id" value="1" />
-        <column name="field_name" value="Full Name" />
-        <column name="field_type" value="text" />
-        <column name="is_required" valueBoolean="true" />
-    </insert>
-    <insert tableName="form_field">
-        <column name="service_id" value="1" />
-        <column name="field_name" value="Email Address" />
-        <column name="field_type" value="email" />
-        <column name="is_required" valueBoolean="true" />
-    </insert>
-    <insert tableName="form_field">
-        <column name="service_id" value="1" />
-        <column name="field_name" value="Phone Number" />
-        <column name="field_type" value="tel" />
-        <column name="is_required" valueBoolean="false" />
-    </insert>
+    <changeSet id="4-populate-formfield" author="TomYaMn">
+        <!-- Form fields for Registration and Booking -->
+        <insert tableName="form_field">
+            <column name="service_id" value="1" />
+            <column name="field_name" value="Full Name" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="true" />
+        </insert>
+        <insert tableName="form_field">
+            <column name="service_id" value="1" />
+            <column name="field_name" value="Email Address" />
+            <column name="field_type" value="email" />
+            <column name="is_required" valueBoolean="true" />
+        </insert>
+        <insert tableName="form_field">
+            <column name="service_id" value="1" />
+            <column name="field_name" value="Phone Number" />
+            <column name="field_type" value="tel" />
+            <column name="is_required" valueBoolean="false" />
+        </insert>
+        <insert tableName="form_field">
+            <column name="service_id" value="1" />
+            <column name="field_name" value="Sign-Up for Exploration" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="true" />
+        </insert>
+        <insert tableName="form_field">
+            <column name="service_id" value="1" />
+            <column name="field_name" value="Seat Selection" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="false" />
+        </insert>
+        <insert tableName="form_field">
+            <column name="service_id" value="1" />
+            <column name="field_name" value="Package Customization" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="false" />
+        </insert>
+        <insert tableName="form_field">
+            <column name="service_id" value="1" />
+            <column name="field_name" value="Secure Payment Portal" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="false" />
+        </insert>
 
-    <!-- Form fields for Information and Education -->
-    <insert tableName="form_field">
-        <column name="service_id" value="2" />
-        <column name="field_name" value="Name" />
-        <column name="field_type" value="text" />
-        <column name="is_required" valueBoolean="true" />
-    </insert>
-    <insert tableName="form_field">
-        <column name="service_id" value="2" />
-        <column name="field_name" value="Preferred Language" />
-        <column name="field_type" value="dropdown" />
-        <column name="is_required" valueBoolean="false" />
-    </insert>
+        <!-- Form fields for Information and Education -->
+        <insert tableName="form_field">
+            <column name="service_id" value="2" />
+            <column name="field_name" value="Name" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="true" />
+        </insert>
+        <insert tableName="form_field">
+            <column name="service_id" value="2" />
+            <column name="field_name" value="Preferred Language" />
+            <column name="field_type" value="dropdown" />
+            <column name="is_required" valueBoolean="false" />
+        </insert>
+        <insert tableName="form_field">
+            <column name="service_id" value="2" />
+            <column name="field_name" value="Mission Overview" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="true" />
+        </insert>
+        <insert tableName="form_field">
+            <column name="service_id" value="2" />
+            <column name="field_name" value="Virtual Uranus Tour" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="false" />
+        </insert>
+        <insert tableName="form_field">
+            <column name="service_id" value="2" />
+            <column name="field_name" value="Astronomy Learning Hub" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="false" />
+        </insert>
 
-    <!-- Form fields for Pre-Departure Preparations -->
-    <insert tableName="form_field">
-        <column name="service_id" value="3" />
-        <column name="field_name" value="Medical Records" />
-        <column name="field_type" value="file" />
-        <column name="is_required" valueBoolean="true" />
-    </insert>
-    <insert tableName="form_field">
-        <column name="service_id" value="3" />
-        <column name="field_name" value="Emergency Contact Information" />
-        <column name="field_type" value="text" />
-        <column name="is_required" valueBoolean="true" />
-    </insert>
-</changeSet>
+        <!-- Form fields for Pre-Departure Preparations -->
+        <insert tableName="form_field">
+            <column name="service_id" value="3" />
+            <column name="field_name" value="Health Assessment Submission" />
+            <column name="field_type" value="file" />
+            <column name="is_required" valueBoolean="true" />
+        </insert>
+        <insert tableName="form_field">
+            <column name="service_id" value="3" />
+            <column name="field_name" value="Training Modules" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="false" />
+        </insert>
+        <insert tableName="form_field">
+            <column name="service_id" value="3" />
+            <column name="field_name" value="Gear and Equipment Store" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="false" />
+        </insert>
+
+        <!-- Form fields for Communication and Community -->
+        <insert tableName="form_field">
+            <column name="service_id" value="4" />
+            <column name="field_name" value="Live Chat Support" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="true" />
+        </insert>
+        <insert tableName="form_field">
+            <column name="service_id" value="4" />
+            <column name="field_name" value="Explorer Forums" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="false" />
+        </insert>
+        <insert tableName="form_field">
+            <column name="service_id" value="4" />
+            <column name="field_name" value="Event Notifications" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="false" />
+        </insert>
+
+        <!-- Form fields for Personalization Options -->
+        <insert tableName="form_field">
+            <column name="service_id" value="5" />
+            <column name="field_name" value="Mission Customization" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="true" />
+        </insert>
+        <insert tableName="form_field">
+            <column name="service_id" value="5" />
+            <column name="field_name" value="Travel Journals" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="false" />
+        </insert>
+        <insert tableName="form_field">
+            <column name="service_id" value="5" />
+            <column name="field_name" value="Custom Souvenirs" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="false" />
+        </insert>
+
+        <!-- Form fields for On-Mission Features -->
+        <insert tableName="form_field">
+            <column name="service_id" value="6" />
+            <column name="field_name" value="Live Mission Tracking" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="true" />
+        </insert>
+        <insert tableName="form_field">
+            <column name="service_id" value="6" />
+            <column name="field_name" value="Daily Mission Updates" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="false" />
+        </insert>
+        <insert tableName="form_field">
+            <column name="service_id" value="6" />
+            <column name="field_name" value="Family Live Streaming" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="false" />
+        </insert>
+
+        <!-- Form fields for Post-Mission Services -->
+        <insert tableName="form_field">
+            <column name="service_id" value="7" />
+            <column name="field_name" value="Completion Certificates" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="true" />
+        </insert>
+        <insert tableName="form_field">
+            <column name="service_id" value="7" />
+            <column name="field_name" value="Feedback Portal" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="false" />
+        </insert>
+        <insert tableName="form_field">
+            <column name="service_id" value="7" />
+            <column name="field_name" value="Alumni Network Access" />
+            <column name="field_type" value="text" />
+            <column name="is_required" valueBoolean="false" />
+        </insert>
+    </changeSet>
 
 </databaseChangeLog>
