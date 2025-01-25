@@ -24,7 +24,7 @@
   font-size: 2rem;
   text-align: center;
   cursor: pointer;
-  z-index: 0; 
+  z-index: 0;
 }
 
 .sideNav:hover {
@@ -36,6 +36,7 @@
 .sideNav:hover::after {
   content: "";  /* Remove the icon when hovering */
   padding: 0;
+  z-index: 0;
 }
 
 
