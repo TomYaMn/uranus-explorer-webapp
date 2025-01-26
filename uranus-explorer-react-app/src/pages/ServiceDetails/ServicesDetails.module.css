@@ -1,0 +1,94 @@
+/* ServiceDetails.module.css */
+.ServiceDetails {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--secondary-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    color: var(--text-color-light);
+  }
+  
+  .serviceList {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  
+  .serviceItem {
+    background-color: var(--neutral-light);
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    color: var(--text-color-dark);
+    font-size: 1rem;
+    transition: background-color 0.3s;
+  }
+  
+  .serviceItem:hover {
+    background-color: var(--primary-hover);
+  }
+  
+  .formFields {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 20px;
+  }
+  
+  .formField {
+    margin-bottom: 15px;
+  }
+  
+  .formField label {
+    font-size: 1rem;
+    color: var(--text-color-dark);
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .formField input {
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid var(--neutral-light);
+    border-radius: 4px;
+    width: 100%;
+    margin-top: 5px;
+  }
+  
+  .formField input[type="checkbox"] {
+    width: auto;
+  }
+  
+  .error {
+    color: var(--error-color);
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  
+  .goBack {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: var(--secondary-color);
+    color: #fff;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .goBack:hover {
+    background-color: var(--secondary-hover);
+  }
+  

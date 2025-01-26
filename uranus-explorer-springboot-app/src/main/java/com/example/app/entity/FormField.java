@@ -3,18 +3,22 @@ package com.example.app.entity;
 import jakarta.persistence.*;
 
 @Entity
-public class FormField {
+@Table(name = "form_field")
+public class FormField extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String fieldName;
-    private String fieldType;
     private boolean isRequired;
 
     @ManyToOne
-    @JoinColumn(name = "service_id", nullable = false)
-    private ServiceEntity service;
+    @JoinColumn(name = "e_service_id", nullable = false)
+    private EService eService;
+
+    @ManyToOne
+    @JoinColumn(name = "field_type_id", referencedColumnName = "id")
+    private FieldType fieldTypes;
 
     public Long getId() {
         return id;
@@ -32,14 +36,6 @@ public class FormField {
         this.fieldName = fieldName;
     }
 
-    public String getFieldType() {
-        return fieldType;
-    }
-
-    public void setFieldType(String fieldType) {
-        this.fieldType = fieldType;
-    }
-
     public boolean isRequired() {
         return isRequired;
     }
@@ -48,13 +44,19 @@ public class FormField {
         isRequired = required;
     }
 
-    public ServiceEntity getService() {
-        return service;
+    public EService geteService() {
+        return eService;
     }
 
-    public void setService(ServiceEntity service) {
-        this.service = service;
+    public void seteService(EService eService) {
+        this.eService = eService;
     }
 
-// Getters and Setters
+    public FieldType getFieldTypes() {
+        return fieldTypes;
+    }
+
+    public void setFieldTypes(FieldType fieldTypes) {
+        this.fieldTypes = fieldTypes;
+    }
 }

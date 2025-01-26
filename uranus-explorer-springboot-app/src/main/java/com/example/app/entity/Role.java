@@ -2,32 +2,45 @@ package com.example.app.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Set;
-
 @Entity
-public class Role {
+@Table(name = "role")
+public class Role extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name; // e.g., "ROLE_USER", "ROLE_ADMIN"
+    @Column(name = "role_name", unique = true)  // Enforce uniqueness of role names
+    private String roleName;  // e.g., "ROLE_USER", "ROLE_ADMIN"
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
+    // Getter and setter for user
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    // Getter and setter for roleName
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    // Getter and setter for id (Optional as BaseEntity may have id)
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

@@ -3,11 +3,13 @@ import styles from "./Services.module.css";
 import Button from "../../components/Button/Button";
 import { fetchWithAuth } from "../../utils/tokenUtils";
 import { Service } from "../../interfaces/Services";
-import Loading from "../../components/Loading/Loading";  // Import the Loading component
+import { useNavigate } from 'react-router-dom';
+import Loading from "../../components/Loading/Loading";
 
 const Services: React.FC = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -31,6 +33,10 @@ const Services: React.FC = () => {
     fetchServices();
   }, []);
 
+  const handleApplyClick = (service: Service) => {
+    navigate('/service-details', { state: service})
+  };
+
   return (
     <div className={styles.Services}>
       {loading && <Loading />} {/* Show loading spinner while fetching data */}
@@ -43,7 +49,9 @@ const Services: React.FC = () => {
             <div className={styles.serviceContent}>
               <div className={styles.columnOne}>
                 <h2 className={styles.categoryTitle}>{service.category}</h2>
-                <Button label="Apply" />
+                <Button label="Apply" 
+                  onClick={() => handleApplyClick(service)}  // Pass service data to the ServiceDetails page
+                />
               </div>
               <div className={styles.columnTwo}>
                 <ul className={styles.serviceList}>

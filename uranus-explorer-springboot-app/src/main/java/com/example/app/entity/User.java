@@ -1,17 +1,14 @@
 package com.example.app.entity;
 
-import com.example.app.dto.LoginUserDto;
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "user")
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,22 +18,9 @@ public class User {
     private String password;
     private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER) // Fetch roles eagerly to assign authorities
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles;
-
-
-    @CreationTimestamp
-    @Column(updatable = false, name = "created_at")
-    private Date createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private Date updatedAt;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)  // Use subselect for better query optimization when fetching roles
+    private List<Role> roles;
 
     public Long getId() {
         return id;
@@ -70,11 +54,11 @@ public class User {
         this.email = email;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 }

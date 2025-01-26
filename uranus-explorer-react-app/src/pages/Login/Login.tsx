@@ -32,10 +32,10 @@ const Login: React.FC = () => {
       setPopupType("success");
       setShowPopup(true);
 
-      // Wait for the popup to display, then navigate
       setTimeout(() => {
-        navigate("/home"); // Adjust path as necessary
-      }, 2000); // 2 seconds delay
+        navigate("/home");
+        window.location.reload(); // Force full-page reload
+      }, 2000); // 2 seconds delay for popup
     } catch (error) {
       dispatch(userAuthError("Invalid credentials"));
       setPopupMessage("Invalid credentials. Please try again.");

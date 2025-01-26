@@ -8,6 +8,7 @@ import Signup from "../pages/Signup";
 import Services from "../pages/Services";
 import HomeLayout from "../components/HomeLayout/HomeLayout";
 import { isAuthenticated } from "../utils/tokenUtils";
+import ServiceDetails from "../pages/ServiceDetails/ServiceDetails";
 
 interface RouteProps {
   isAuthenticated: boolean;
@@ -21,6 +22,7 @@ const AuthenticatedRoutes: React.FC<RouteProps> = ({ isAuthenticated }) => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/service-details" element={<ServiceDetails />} />
         <Route path="*" element={<Home />} />
       </Routes>
     </HomeLayout>

@@ -3,23 +3,17 @@ package com.example.app.service;
 import com.example.app.auth.CustomAuthenticationProvider;
 import com.example.app.dto.LoginUserDto;
 import com.example.app.dto.RegisterUserDto;
-import com.example.app.auth.CustomUserDetails;
 import com.example.app.entity.Role;
 import com.example.app.entity.User;
 import com.example.app.repository.RoleRepository;
 import com.example.app.repository.UserRepository;
-import jakarta.transaction.Transactional;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class AuthenticationService {
@@ -55,18 +49,19 @@ public class AuthenticationService {
         user.setUsername(input.getUserName());
         user.setEmail(input.getEmail());
         user.setPassword(passwordEncoder.encode(input.getPassword()));
+        user.setCommonFields(true, new Date());
 
         // Fetch or create the default role (e.g., "ROLE_USER")
-        Role role = roleRepository.findByName("ROLE_USER")
+        Role role = roleRepository.findByRoleName("ROLE_USER")
                 .orElseGet(() -> {
                     // Create the role if it doesn't exist
                     Role newRole = new Role();
-                    newRole.setName("ROLE_USER");
+                    newRole.setRoleName("ROLE_USER");
                     return roleRepository.save(newRole); // Save the newly created role
                 });
 
         // Assign the role to the user
-        user.setRoles(Set.of(role)); // Assuming user has a 'roles' field
+        user.setRoles(List.of(role)); // Assuming user has a 'roles' field
 
         // Save the user and return
         return userRepository.save(user);
@@ -96,29 +91,4 @@ public class AuthenticationService {
 
         return user; // Return the user entity directly
     }
-
-//    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-//        String usernameOrEmail = authentication.getName();
-//        String password = authentication.getCredentials().toString();
-//
-//        // Check if the usernameOrEmail is an email
-//        boolean isEmail = usernameOrEmail.contains("@");
-//
-//        UserDetails userDetails = null;
-//        if (isEmail) {
-//            // If it's an email, authenticate using the email field
-//            userDetails = CustomUserDetailsService.loadUserByUsername(usernameOrEmail);
-//        } else {
-//            // If it's a username, authenticate using the username field
-//            userDetails = CustomUserDetailsService.loadUserByUsername(usernameOrEmail);
-//        }
-//
-//        if (userDetails == null || !passwordEncoder.matches(password, userDetails.getPassword())) {
-//            throw new BadCredentialsException("Invalid username or password");
-//        }
-//
-//        // Create and return the authentication token
-//        return new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
-//    }
-
 }
