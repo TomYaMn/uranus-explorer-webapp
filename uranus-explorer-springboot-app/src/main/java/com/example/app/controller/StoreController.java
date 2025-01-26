@@ -18,11 +18,11 @@ public class StoreController {
     private MinioService minioService;
 
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+    public void uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         String bucketName = "your-bucket-name";
         String objectName = file.getOriginalFilename();
         String contentType = file.getContentType();
 
-        return minioService.uploadFile(bucketName, objectName, file.getInputStream(), contentType);
+        minioService.uploadFile(bucketName, objectName, file.getInputStream(), contentType);
     }
 }

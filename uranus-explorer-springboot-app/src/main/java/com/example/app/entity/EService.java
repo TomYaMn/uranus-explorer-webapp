@@ -14,7 +14,8 @@ public class EService extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String category;
+    @Column(name = "e_service_name", nullable = false)
+    private String eServiceName;
 
     @OneToMany(mappedBy = "eService", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
@@ -32,12 +33,12 @@ public class EService extends BaseEntity {
         this.id = id;
     }
 
-    public String getCategory() {
-        return category;
+    public String geteServiceName() {
+        return eServiceName;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void seteServiceName(String eServiceName) {
+        this.eServiceName = eServiceName;
     }
 
     public List<EServiceItem> getEServiceItems() {

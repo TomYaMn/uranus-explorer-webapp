@@ -10,6 +10,7 @@ public class FieldType extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "field_type_name", nullable = false)
     private String fieldTypeName;
 
     // Fixing the one-to-many relationship: using List<FormField> for a collection

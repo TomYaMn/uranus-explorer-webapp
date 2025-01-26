@@ -1,5 +1,5 @@
 -- Populate Services Table
-INSERT INTO e_service (id, category, created_at, updated_at, status) VALUES
+INSERT INTO e_service (id, e_service_name, created_at, updated_at, status) VALUES
 (1, 'Registration and Booking', NOW(), NOW(), TRUE),
 (2, 'Information and Education', NOW(), NOW(), TRUE),
 (3, 'Pre-Departure Preparations', NOW(), NOW(), TRUE),
@@ -9,7 +9,7 @@ INSERT INTO e_service (id, category, created_at, updated_at, status) VALUES
 (7, 'Post-Mission Services', NOW(), NOW(), TRUE);
 
 -- Populate Service Items Table
-INSERT INTO e_service_item (e_service_id, item, created_at, updated_at, status) VALUES
+INSERT INTO e_service_item (e_service_id, e_service_item, created_at, updated_at, status) VALUES
 (1, 'Sign-Up for Exploration: Register for the Uranus exploration program.', NOW(), NOW(), TRUE),
 (1, 'Seat Selection: Choose your preferred seat on the spacecraft.', NOW(), NOW(), TRUE),
 (1, 'Package Customization: Tailor your exploration package based on your interests.', NOW(), NOW(), TRUE),

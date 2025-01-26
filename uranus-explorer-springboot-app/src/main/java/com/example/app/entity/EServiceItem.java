@@ -10,7 +10,8 @@ public class EServiceItem extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String item;
+    @Column(name = "e_service_item", nullable = false)
+    private String eServiceItem;
 
     @ManyToOne
     @JoinColumn(name = "e_service_id", nullable = false)
@@ -24,12 +25,12 @@ public class EServiceItem extends BaseEntity {
         this.id = id;
     }
 
-    public String getItem() {
-        return item;
+    public String getEServiceItem() {
+        return eServiceItem;
     }
 
-    public void setItem(String item) {
-        this.item = item;
+    public void setEServiceItem(String eServiceItem) {
+        this.eServiceItem = eServiceItem;
     }
 
     public EService geteService() {

@@ -1,4 +1,5 @@
 package com.example.app.service;
+
 import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.PutObjectArgs;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
-import java.util.List;
 
 @Service
 public class MinioService {
@@ -23,9 +23,17 @@ public class MinioService {
     @Value("${minio.secretKey}")
     private String secretKey;
 
-    private MinioClient minioClient;
+    private final MinioClient minioClient;
 
-    public MinioService() {
+    // Constructor to allow Spring to inject dependencies
+    public MinioService(@Value("${minio.endpoint}") String endpoint,
+                        @Value("${minio.accessKey}") String accessKey,
+                        @Value("${minio.secretKey}") String secretKey) {
+        this.endpoint = endpoint;
+        this.accessKey = accessKey;
+        this.secretKey = secretKey;
+
+        // Initialize Minio client
         this.minioClient = MinioClient.builder()
                 .endpoint(endpoint)
                 .credentials(accessKey, secretKey)

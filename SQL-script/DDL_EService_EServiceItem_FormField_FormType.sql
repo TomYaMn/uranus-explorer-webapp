@@ -1,7 +1,7 @@
 -- Create 'e_service' table
 CREATE TABLE e_service (
     id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    category VARCHAR(155) NOT NULL UNIQUE,
+    e_service_name VARCHAR(155) NOT NULL UNIQUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
     status BOOLEAN DEFAULT TRUE
@@ -11,18 +11,12 @@ CREATE TABLE e_service (
 CREATE TABLE e_service_item (
     id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     e_service_id BIGINT NOT NULL,
-    item VARCHAR(155) NOT NULL,
+    e_service_item VARCHAR(155) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
     status BOOLEAN DEFAULT TRUE,
     CONSTRAINT fk_service_items_to_services FOREIGN KEY (e_service_id) REFERENCES e_service(id)
 );
-
--- Drop field_type table if it exists
-DROP TABLE IF EXISTS field_type;
-
--- Drop form_field table if it exists
-DROP TABLE IF EXISTS form_field;
 
 -- Create field_type table
 CREATE TABLE field_type (
@@ -30,7 +24,7 @@ CREATE TABLE field_type (
     field_type_name VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
-    status BOOLEAN DEFAULT TRUE,
+    status BOOLEAN DEFAULT TRUE
 );
 
 -- Create form_field table
