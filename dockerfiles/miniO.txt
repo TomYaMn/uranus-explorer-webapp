@@ -1,0 +1,10 @@
+docker run -d \
+  -p 9000:9000 -p 9001:9001 \
+  --name uranus-explorer-minio \
+  -e "MINIO_ACCESS_KEY=your-access-key" \
+  -e "MINIO_SECRET_KEY=your-secret-key" \
+  -v minio_data:/data \
+  minio/minio server /data
+
+
+  run Dockerfile only if you want to configure (advance)

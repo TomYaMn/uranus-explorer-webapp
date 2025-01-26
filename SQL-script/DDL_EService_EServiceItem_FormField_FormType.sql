@@ -46,3 +46,50 @@ CREATE TABLE form_field (
     FOREIGN KEY (field_type_id) REFERENCES field_type(id),
     FOREIGN KEY (e_service_id) REFERENCES e_service(id)
 );
+
+-- Create form_field_option table
+CREATE TABLE form_field_option (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    form_field_id BIGINT NOT NULL, 
+    option_value VARCHAR(255) NOT NULL, 
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
+    status BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (form_field_id) REFERENCES form_field(id)
+);
+
+-- Create form_field_tooltips table
+CREATE TABLE form_field_tooltips (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    form_field_id BIGINT NOT NULL, 
+    tooltip_text TEXT NOT NULL, 
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
+    status BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (form_field_id) REFERENCES form_field(id)
+);
+
+-- Create form_field_value table
+CREATE TABLE form_field_value (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    form_field_id BIGINT NOT NULL, 
+    user_input_value TEXT NOT NULL, 
+    user_id BIGINT NOT NULL, 
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
+    status BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (form_field_id) REFERENCES form_field(id)
+);
+
+-- Create form_field_document table with base64url encoding for document and document_type column
+CREATE TABLE form_field_document (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    form_field_id BIGINT NOT NULL, 
+    document_url VARCHAR(255) NOT NULL,  -- Store the URL or path to the document in MinIO
+    document_type VARCHAR(50) NOT NULL,  -- Store the document type (e.g., 'pdf', 'jpg', 'docx')
+    user_id BIGINT NOT NULL, 
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
+    status BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (form_field_id) REFERENCES form_field(id)
+);
