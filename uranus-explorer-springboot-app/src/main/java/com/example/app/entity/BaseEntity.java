@@ -21,8 +21,8 @@ public abstract class BaseEntity {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @Column(name = "status")
-    private boolean status;
+    @Column(name = "is_active")
+    private Boolean status;
 
     // Getters and Setters
     public Date getCreatedAt() {
@@ -41,11 +41,11 @@ public abstract class BaseEntity {
         this.updatedAt = updatedAt;
     }
 
-    public boolean isStatus() {
+    public Boolean isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

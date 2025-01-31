@@ -22,21 +22,22 @@ public class FormField extends BaseEntity {
     private EService eService;
 
     @ManyToOne
-    @JoinColumn(name = "field_type_id", referencedColumnName = "id")
-    private FieldType fieldTypes;
+    @JoinColumn(name = "field_type_id", referencedColumnName = "id", nullable = false)
+    private FieldType fieldType;
 
-    @OneToMany(mappedBy = "formField", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<FormFieldOption> options;
+    @Column(name = "field_options", columnDefinition = "JSON")
+    private String fieldOptions;
 
-    @OneToOne(mappedBy = "formField", cascade = CascadeType.ALL, orphanRemoval = true)
-    private FormFieldTooltip tooltips;
+    @OneToMany(mappedBy = "formField", cascade = CascadeType.ALL)
+    private List<FormFieldValue> values;
 
-    @OneToOne(mappedBy = "formField", cascade = CascadeType.ALL, orphanRemoval = true)
-    private FormFieldValue values;
-
-    @OneToMany(mappedBy = "formField", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "formField", cascade = CascadeType.ALL)
     private List<FormFieldDocument> documents;
 
+    @OneToOne(mappedBy = "formField", cascade = CascadeType.ALL) // Add this line to associate with FormFieldTooltip
+    private FormFieldTooltip tooltip; // This is the tooltip relationship
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -69,35 +70,27 @@ public class FormField extends BaseEntity {
         this.eService = eService;
     }
 
-    public FieldType getFieldTypes() {
-        return fieldTypes;
+    public FieldType getFieldType() {
+        return fieldType;
     }
 
-    public void setFieldTypes(FieldType fieldTypes) {
-        this.fieldTypes = fieldTypes;
+    public void setFieldType(FieldType fieldType) {
+        this.fieldType = fieldType;
     }
 
-    public List<FormFieldOption> getOptions() {
-        return options;
+    public String getFieldOptions() {
+        return fieldOptions;
     }
 
-    public void setOptions(List<FormFieldOption> options) {
-        this.options = options;
+    public void setFieldOptions(String fieldOptions) {
+        this.fieldOptions = fieldOptions;
     }
 
-    public FormFieldTooltip getTooltips() {
-        return tooltips;
-    }
-
-    public void setTooltips(FormFieldTooltip tooltips) {
-        this.tooltips = tooltips;
-    }
-
-    public FormFieldValue getValues() {
+    public List<FormFieldValue> getValues() {
         return values;
     }
 
-    public void setValues(FormFieldValue values) {
+    public void setValues(List<FormFieldValue> values) {
         this.values = values;
     }
 
@@ -107,5 +100,13 @@ public class FormField extends BaseEntity {
 
     public void setDocuments(List<FormFieldDocument> documents) {
         this.documents = documents;
+    }
+
+    public FormFieldTooltip getTooltip() {
+        return tooltip; // Ensure the tooltip is accessible
+    }
+
+    public void setTooltip(FormFieldTooltip tooltip) {
+        this.tooltip = tooltip;
     }
 }

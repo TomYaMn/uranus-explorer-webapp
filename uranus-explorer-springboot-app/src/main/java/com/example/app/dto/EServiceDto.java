@@ -1,24 +1,37 @@
 package com.example.app.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class EServiceDto {
-    private String category;
+    @JsonProperty("eServiceName")
+    private String eServiceName; // eServiceName as per the schema
+    private Long serviceId;
     private List<FormField> formFields;
-    private List<ServiceItemDto> serviceItems; // Use ServiceItemDto here
+    private List<ServiceItemDto> serviceItems;
 
-    public EServiceDto(String category, List<FormField> formFields, List<ServiceItemDto> serviceItems) {
-        this.category = category;
+    public EServiceDto(String eServiceName, Long serviceId, List<FormField> formFields, List<ServiceItemDto> serviceItems) {
+        this.eServiceName = eServiceName;
+        this.serviceId = serviceId;
         this.formFields = formFields;
         this.serviceItems = serviceItems;
     }
 
-    public String getCategory() {
-        return category;
+    public String getEServiceName() {
+        return eServiceName;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setEServiceName(String eServiceName) {
+        this.eServiceName = eServiceName;
+    }
+
+    public Long getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(Long serviceId) {
+        this.serviceId = serviceId;
     }
 
     public List<FormField> getFormFields() {
@@ -37,27 +50,24 @@ public class EServiceDto {
         this.serviceItems = serviceItems;
     }
 
-    // FormField class implementation
+    // Updated FormField class with field_type_id and e_service_id
     public static class FormField {
         private String fieldName;
         private boolean isRequired;
-        private String fieldTypeName; // Assuming FieldType is a simple name field
-        private List<FormFieldOptionDto> options;
+        private Long fieldTypeId; // Changed to align with the entity's field type ID
         private FormFieldTooltipDto tooltip;
+        private Long eServiceId; // Changed to eServiceId for the reference
+        private Boolean isActive; // Added isActive to match entity
+        private String fieldOptions; // Store field options as JSON string
 
-
-        // Default constructor
-        public FormField() {}
-
-        // Parameterized constructor
-        public FormField(String fieldName, String fieldTypeName, boolean required,
-                         List<FormFieldOptionDto> options, FormFieldTooltipDto tooltip
-                        ){
+        public FormField(String fieldName, boolean isRequired, Long fieldTypeId, FormFieldTooltipDto tooltip, Long eServiceId, Boolean isActive, String fieldOptions) {
             this.fieldName = fieldName;
-            this.fieldTypeName = fieldTypeName;
-            this.isRequired = required;
-            this.options = options;
+            this.isRequired = isRequired;
+            this.fieldTypeId = fieldTypeId;
             this.tooltip = tooltip;
+            this.eServiceId = eServiceId;
+            this.isActive = isActive;
+            this.fieldOptions = fieldOptions;
         }
 
         public String getFieldName() {
@@ -76,20 +86,12 @@ public class EServiceDto {
             isRequired = required;
         }
 
-        public String getFieldTypeName() {
-            return fieldTypeName;
+        public Long getFieldTypeId() {
+            return fieldTypeId;
         }
 
-        public void setFieldTypeName(String fieldTypeName) {
-            this.fieldTypeName = fieldTypeName;
-        }
-
-        public List<FormFieldOptionDto> getOptions() {
-            return options;
-        }
-
-        public void setOptions(List<FormFieldOptionDto> options) {
-            this.options = options;
+        public void setFieldTypeId(Long fieldTypeId) {
+            this.fieldTypeId = fieldTypeId;
         }
 
         public FormFieldTooltipDto getTooltip() {
@@ -99,21 +101,29 @@ public class EServiceDto {
         public void setTooltip(FormFieldTooltipDto tooltip) {
             this.tooltip = tooltip;
         }
-    }
 
-    public static class FormFieldOptionDto {
-        private String optionValue;
-
-        public FormFieldOptionDto(String optionValue) {
-            this.optionValue = optionValue;
+        public Long geteServiceId() {
+            return eServiceId;
         }
 
-        public String getOptionValue() {
-            return optionValue;
+        public void seteServiceId(Long eServiceId) {
+            this.eServiceId = eServiceId;
         }
 
-        public void setOptionValue(String optionValue) {
-            this.optionValue = optionValue;
+        public Boolean getActive() {
+            return isActive;
+        }
+
+        public void setActive(Boolean active) {
+            isActive = active;
+        }
+
+        public String getFieldOptions() {
+            return fieldOptions;
+        }
+
+        public void setFieldOptions(String fieldOptions) {
+            this.fieldOptions = fieldOptions;
         }
     }
 
@@ -133,49 +143,6 @@ public class EServiceDto {
         }
     }
 
-    public static class FormFieldValueDto {
-        private String userInputValue;
-
-        public FormFieldValueDto(String userInputValue) {
-            this.userInputValue = userInputValue;
-        }
-
-        public String getUserInputValue() {
-            return userInputValue;
-        }
-
-        public void setUserInputValue(String userInputValue) {
-            this.userInputValue = userInputValue;
-        }
-    }
-
-    public static class FormFieldDocumentDto {
-        private String documentUrl;
-        private String documentType;
-
-        public FormFieldDocumentDto(String documentUrl, String documentType) {
-            this.documentUrl = documentUrl;
-            this.documentType = documentType;
-        }
-
-        public String getDocumentUrl() {
-            return documentUrl;
-        }
-
-        public void setDocumentUrl(String documentUrl) {
-            this.documentUrl = documentUrl;
-        }
-
-        public String getDocumentType() {
-            return documentType;
-        }
-
-        public void setDocumentType(String documentType) {
-            this.documentType = documentType;
-        }
-    }
-
-    // Nested ServiceItemDto class
     public static class ServiceItemDto {
         private String item;
 

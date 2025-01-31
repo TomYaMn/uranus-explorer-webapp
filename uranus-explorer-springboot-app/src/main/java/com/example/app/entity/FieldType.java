@@ -10,11 +10,10 @@ public class FieldType extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "field_type_name", nullable = false)
-    private String fieldTypeName;
+    @Column(name = "input_type_name", nullable = false, unique = true, length = 50)
+    private String inputTypeName; // Mapped correctly to input_type_name in the table
 
-    // Fixing the one-to-many relationship: using List<FormField> for a collection
-    @OneToMany(mappedBy = "fieldTypes", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "fieldType", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<FormField> formFields;
 
     public Long getId() {
@@ -23,14 +22,6 @@ public class FieldType extends BaseEntity {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getFieldTypeName() {
-        return fieldTypeName;
-    }
-
-    public void setFieldTypeName(String fieldTypeName) {
-        this.fieldTypeName = fieldTypeName;
     }
 
     public List<FormField> getFormFields() {

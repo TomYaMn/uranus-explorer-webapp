@@ -2,6 +2,8 @@ package com.example.app.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "form_field_document")
 public class FormFieldDocument extends BaseEntity {
@@ -10,17 +12,18 @@ public class FormFieldDocument extends BaseEntity {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "submission_id", nullable = false)
+    private Submission submission; // Referencing submission table
+
+    @ManyToOne
     @JoinColumn(name = "form_field_id", nullable = false)
-    private FormField formField;
+    private FormField formField; // Referencing form_field table
 
-    @Column(name = "document_url", nullable = false)
-    private String documentUrl;
+    @Column(name = "document_url", nullable = false, length = 255)
+    private String documentUrl; // Mapping document_url
 
-    @Column(name = "document_type", nullable = false)
-    private String documentType;
-
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @Column(name = "document_type", nullable = false, length = 50)
+    private String documentType; // Mapping document_type (ENUM replaced with varchar)
 
     public Long getId() {
         return id;
@@ -28,6 +31,14 @@ public class FormFieldDocument extends BaseEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Submission getSubmission() {
+        return submission;
+    }
+
+    public void setSubmission(Submission submission) {
+        this.submission = submission;
     }
 
     public FormField getFormField() {
@@ -52,13 +63,5 @@ public class FormFieldDocument extends BaseEntity {
 
     public void setDocumentType(String documentType) {
         this.documentType = documentType;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 }

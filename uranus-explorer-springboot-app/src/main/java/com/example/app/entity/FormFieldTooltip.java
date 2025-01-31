@@ -3,8 +3,9 @@ package com.example.app.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "form_field_tooltips")
+@Table(name = "form_field_tooltip")  // Use singular name as per DB schema
 public class FormFieldTooltip extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,6 +17,8 @@ public class FormFieldTooltip extends BaseEntity {
     @Column(name = "tooltip_text", nullable = false, columnDefinition = "TEXT")
     private String tooltipText;
 
+
+    // Getter and Setter methods
     public Long getId() {
         return id;
     }
@@ -40,3 +43,4 @@ public class FormFieldTooltip extends BaseEntity {
         this.tooltipText = tooltipText;
     }
 }
+

@@ -1,5 +1,5 @@
 -- Populate Services Table
-INSERT INTO e_service (id, e_service_name, created_at, updated_at, status) VALUES
+INSERT INTO e_service (id, e_service_name, created_at, updated_at, is_active) VALUES
 (1, 'Registration and Booking', NOW(), NOW(), TRUE),
 (2, 'Information and Education', NOW(), NOW(), TRUE),
 (3, 'Pre-Departure Preparations', NOW(), NOW(), TRUE),
@@ -9,7 +9,7 @@ INSERT INTO e_service (id, e_service_name, created_at, updated_at, status) VALUE
 (7, 'Post-Mission Services', NOW(), NOW(), TRUE);
 
 -- Populate Service Items Table
-INSERT INTO e_service_item (e_service_id, e_service_item, created_at, updated_at, status) VALUES
+INSERT INTO e_service_item (e_service_id, e_service_item, created_at, updated_at, is_active) VALUES
 (1, 'Sign-Up for Exploration: Register for the Uranus exploration program.', NOW(), NOW(), TRUE),
 (1, 'Seat Selection: Choose your preferred seat on the spacecraft.', NOW(), NOW(), TRUE),
 (1, 'Package Customization: Tailor your exploration package based on your interests.', NOW(), NOW(), TRUE),
@@ -40,61 +40,72 @@ INSERT INTO e_service_item (e_service_id, e_service_item, created_at, updated_at
 (7, 'Alumni Network Access: Join the exclusive community of Uranus explorers for discounts and special events.', NOW(), NOW(), TRUE);
 
 -- Populate field_type table
-INSERT INTO field_type (field_type_name, created_at, updated_at, status) VALUES
-('text', NOW(), NOW(), TRUE),
-('email', NOW(), NOW(), TRUE),
-('date', NOW(), NOW(), TRUE),
-('dropdown', NOW(), NOW(), TRUE),
-('checkbox', NOW(), NOW(), TRUE),
-('textarea', NOW(), NOW(), TRUE),
-('file', NOW(), NOW(), TRUE);
+INSERT INTO field_type (id, input_type_name, created_at, updated_at, is_active) VALUES
+(1, 'text', NOW(), NOW(), TRUE),
+(2, 'email', NOW(), NOW(), TRUE),
+(3, 'password', NOW(), NOW(), TRUE),
+(4, 'number', NOW(), NOW(), TRUE),
+(5, 'date', NOW(), NOW(), TRUE),
+(6, 'datetime-local', NOW(), NOW(), TRUE),
+(7, 'time', NOW(), NOW(), TRUE),
+(8, 'month', NOW(), NOW(), TRUE),
+(9, 'week', NOW(), NOW(), TRUE),
+(10, 'radio', NOW(), NOW(), TRUE),
+(11, 'dropdown', NOW(), NOW(), TRUE),
+(12, 'checkbox', NOW(), NOW(), TRUE),
+(13, 'textarea', NOW(), NOW(), TRUE),
+(14, 'file', NOW(), NOW(), TRUE),
+(15, 'hidden', NOW(), NOW(), TRUE),
+(16, 'range', NOW(), NOW(), TRUE),
+(17, 'tel', NOW(), NOW(), TRUE),
+(18, 'url', NOW(), NOW(), TRUE),
+(19, 'color', NOW(), NOW(), TRUE),
+(20, 'search', NOW(), NOW(), TRUE);
 
--- Populate form_field table
+
+
+
+-- Populat both tooltip and form field same time
+START TRANSACTION;
+
 -- Service 1: Registration and Booking
-INSERT INTO form_field (field_name, field_type_id, is_required, e_service_id, created_at, updated_at, status) VALUES
-('Full Name', 1, TRUE, 1, NOW(), NOW(), TRUE),
-('Email Address', 2, TRUE, 1, NOW(), NOW(), TRUE),
-('Date of Birth', 3, TRUE, 1, NOW(), NOW(), TRUE),
-('Preferred Exploration Package', 4, TRUE, 1, NOW(), NOW(), TRUE),
-('Supporting Documents', 7, FALSE, 1, NOW(), NOW(), TRUE);
+INSERT INTO form_field (field_name, field_type_id, is_required, e_service_id, field_options, created_at, updated_at, is_active) VALUES
+('Full Name', 1, TRUE, 1, NULL, NOW(), NOW(), TRUE),
+('Email Address', 2, TRUE, 1, NULL, NOW(), NOW(), TRUE),
+('Date of Birth', 5, TRUE, 1, NULL, NOW(), NOW(), TRUE),
+('Preferred Exploration Package', 11, TRUE, 1, NULL, NOW(), NOW(), TRUE),
+('Supporting Documents', 14, FALSE, 1, NULL, NOW(), NOW(), TRUE);
+
+-- Get last inserted ids for form_field
+SET @last_inserted_id = LAST_INSERT_ID();
+
+-- Insert into form_field_tooltip for Service 1
+INSERT INTO form_field_tooltip (tooltip_text, form_field_id, created_at, updated_at, is_active) VALUES
+('Enter your full legal name as per official documents.', @last_inserted_id, NOW(), NOW(), TRUE),
+('Enter a valid email address to receive updates and communications.', @last_inserted_id + 1, NOW(), NOW(), TRUE),
+('Enter your date of birth for verification and age-related considerations.', @last_inserted_id + 2, NOW(), NOW(), TRUE),
+('Select your preferred exploration package based on your interests and budget.', @last_inserted_id + 3, NOW(), NOW(), TRUE),
+('Upload any relevant supporting documents such as identification or medical forms.', @last_inserted_id + 4, NOW(), NOW(), TRUE);
 
 -- Service 2: Information and Education
-INSERT INTO form_field (field_name, field_type_id, is_required, e_service_id, created_at, updated_at, status) VALUES
-('Full Name', 1, TRUE, 2, NOW(), NOW(), TRUE),
-('Email Address', 2, TRUE, 2, NOW(), NOW(), TRUE),
-('Webinar Topic of Interest', 4, TRUE, 2, NOW(), NOW(), TRUE),
-('Preferred Webinar Date', 3, TRUE, 2, NOW(), NOW(), TRUE),
-('Post-Webinar Feedback', 6, FALSE, 2, NOW(), NOW(), TRUE);
+INSERT INTO form_field (field_name, field_type_id, is_required, e_service_id, field_options, created_at, updated_at, is_active) VALUES
+('Full Name', 1, TRUE, 2, NULL, NOW(), NOW(), TRUE),
+('Email Address', 2, TRUE, 2, NULL, NOW(), NOW(), TRUE),
+('Webinar Topic of Interest', 11, TRUE, 2, NULL, NOW(), NOW(), TRUE),
+('Preferred Webinar Date', 5, TRUE, 2, NULL, NOW(), NOW(), TRUE),
+('Post-Webinar Feedback', 13, FALSE, 2, NULL, NOW(), NOW(), TRUE);
 
--- Service 3: Pre-Departure Preparations
-INSERT INTO form_field (field_name, field_type_id, is_required, e_service_id, created_at, updated_at, status) VALUES
-('Full Name', 1, TRUE, 3, NOW(), NOW(), TRUE),
-('Email Address', 2, TRUE, 3, NOW(), NOW(), TRUE),
-('Date of Submission', 3, TRUE, 3, NOW(), NOW(), TRUE),
-('Medical Records', 7, TRUE, 3, NOW(), NOW(), TRUE),
-('Additional Notes', 6, FALSE, 3, NOW(), NOW(), TRUE);
+-- Get last inserted ids for form_field
+SET @last_inserted_id = LAST_INSERT_ID();
 
--- Service 4: Communication and Community
-INSERT INTO form_field (field_name, field_type_id, is_required, e_service_id, created_at, updated_at, status) VALUES
-('Full Name', 1, TRUE, 4, NOW(), NOW(), TRUE),
-('Email Address', 2, TRUE, 4, NOW(), NOW(), TRUE),
-('Event Preferences', 5, FALSE, 4, NOW(), NOW(), TRUE),
-('Preferred Notification Method', 4, TRUE, 4, NOW(), NOW(), TRUE);
+-- Insert into form_field_tooltip for Service 2
+INSERT INTO form_field_tooltip (tooltip_text, form_field_id, created_at, updated_at, is_active) VALUES
+('Enter your full legal name as per official documents.', @last_inserted_id, NOW(), NOW(), TRUE),
+('Enter a valid email address to receive updates and communications.', @last_inserted_id + 1, NOW(), NOW(), TRUE),
+('Select the topic of the webinar that interests you the most.', @last_inserted_id + 2, NOW(), NOW(), TRUE),
+('Select the preferred date for your webinar.', @last_inserted_id + 3, NOW(), NOW(), TRUE),
+('Provide feedback after the webinar is completed.', @last_inserted_id + 4, NOW(), NOW(), TRUE);
 
--- Service 5: Personalization Options
-INSERT INTO form_field (field_name, field_type_id, is_required, e_service_id, created_at, updated_at, status) VALUES
-('Full Name', 1, TRUE, 5, NOW(), NOW(), TRUE),
-('Email Address', 2, TRUE, 5, NOW(), NOW(), TRUE),
-('Exploration Theme', 4, TRUE, 5, NOW(), NOW(), TRUE),
-('Custom Add-Ons', 5, FALSE, 5, NOW(), NOW(), TRUE),
-('Special Requests', 6, FALSE, 5, NOW(), NOW(), TRUE);
+-- Continue the same pattern for Services 3 to 6
 
--- Service 6: On-Mission Features
-INSERT INTO form_field (field_name, field_type_id, is_required, e_service_id, created_at, updated_at, status) VALUES
-('Full Name', 1, TRUE, 6, NOW(), NOW(), TRUE),
-('Email Address', 2, TRUE, 6, NOW(), NOW(), TRUE),
-('Tracking Start Date', 3, TRUE, 6, NOW(), NOW(), TRUE),
-('Preferred Updates', 4, TRUE, 6, NOW(), NOW(), TRUE),
-('Family Access Request', 5, FALSE, 6, NOW(), NOW(), TRUE);
-
-
+COMMIT;

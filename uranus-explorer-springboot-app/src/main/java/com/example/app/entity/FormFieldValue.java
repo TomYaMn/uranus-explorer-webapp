@@ -2,6 +2,9 @@ package com.example.app.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "form_field_value")
 public class FormFieldValue extends BaseEntity {
@@ -9,15 +12,16 @@ public class FormFieldValue extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "submission_id", nullable = false)
+    private Submission submission; // Referencing submission table
+
+    @ManyToOne
     @JoinColumn(name = "form_field_id", nullable = false)
-    private FormField formField;
+    private FormField formField; // Referencing form_field table
 
-    @Column(name = "user_input_value", nullable = false, columnDefinition = "TEXT")
-    private String userInputValue;
-
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @Column(name = "user_input_value", columnDefinition = "JSON")
+    private String userInputValue; // Store as JSON
 
     public Long getId() {
         return id;
@@ -25,6 +29,14 @@ public class FormFieldValue extends BaseEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Submission getSubmission() {
+        return submission;
+    }
+
+    public void setSubmission(Submission submission) {
+        this.submission = submission;
     }
 
     public FormField getFormField() {
@@ -41,13 +53,5 @@ public class FormFieldValue extends BaseEntity {
 
     public void setUserInputValue(String userInputValue) {
         this.userInputValue = userInputValue;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 }

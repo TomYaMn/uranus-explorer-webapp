@@ -3,6 +3,7 @@ package com.example.app.service;
 import com.example.app.dto.EServiceDto;
 import com.example.app.entity.EService;
 import com.example.app.entity.FormField;
+import com.example.app.entity.FormFieldTooltip;
 import com.example.app.repository.EServiceRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,6 +61,7 @@ public class EServiceService {
 
         return new EServiceDto(
                 eService.geteServiceName(),
+                eService.getId(), // Assuming serviceId is the EService's ID
                 formFields,
                 serviceItems
         );
@@ -71,44 +73,30 @@ public class EServiceService {
                 .stream()
                 .map(formField -> new EServiceDto.FormField(
                         formField.getFieldName(),
-                        Optional.ofNullable(formField.getFieldTypes())
-                                .map(fieldType -> fieldType.getFieldTypeName())
-                                .orElse(null),
                         formField.isRequired(),
-                        mapFieldOptions(formField),
-                        Optional.ofNullable(formField.getTooltips())
-                                .map(tooltip -> new EServiceDto.FormFieldTooltipDto(tooltip.getTooltipText()))
-                                .orElse(null)
-//                        ,
-//                        Optional.ofNullable(formField.getValues())
-//                                .map(value -> new EServiceDto.FormFieldValueDto(value.getUserInputValue()))
-//                                .orElse(null),
-//                        mapFieldDocuments(formField)
+                        Optional.ofNullable(formField.getFieldType())
+                                .map(fieldType -> fieldType.getId())
+                                .orElse(null),
+                        getTooltip(formField),  // Mapping tooltip from the separate table
+                        formField.geteService().getId(),
+                        formField.isStatus(),
+                        formField.getFieldOptions() // Assuming it's stored as a JSON string
                 ))
                 .collect(Collectors.toList());
     }
 
-    private List<EServiceDto.FormFieldOptionDto> mapFieldOptions(FormField formField) {
-        return Optional.ofNullable(formField.getOptions())
-                .orElse(Collections.emptyList())
-                .stream()
-                .map(option -> new EServiceDto.FormFieldOptionDto(option.getOptionValue()))
-                .collect(Collectors.toList());
-    }
-
-    private List<EServiceDto.FormFieldDocumentDto> mapFieldDocuments(FormField formField) {
-        return Optional.ofNullable(formField.getDocuments())
-                .orElse(Collections.emptyList())
-                .stream()
-                .map(doc -> new EServiceDto.FormFieldDocumentDto(doc.getDocumentUrl(), doc.getDocumentType()))
-                .collect(Collectors.toList());
+    private EServiceDto.FormFieldTooltipDto getTooltip(FormField formField) {
+        // Check if the FormField has a related tooltip (from the form_field_tooltip table)
+        return Optional.ofNullable(formField.getTooltip())  // Assuming there's a getTooltip method in FormField
+                .map(tooltip -> new EServiceDto.FormFieldTooltipDto(tooltip.getTooltipText()))
+                .orElse(null);
     }
 
     private List<EServiceDto.ServiceItemDto> mapServiceItems(EService eService) {
         return Optional.ofNullable(eService.getEServiceItems())
                 .orElse(Collections.emptyList())
                 .stream()
-                .map(eServiceItem -> new EServiceDto.ServiceItemDto(eServiceItem.getEServiceItem()))
+                .map(serviceItem -> new EServiceDto.ServiceItemDto(serviceItem.getEServiceItem()))
                 .collect(Collectors.toList());
     }
 

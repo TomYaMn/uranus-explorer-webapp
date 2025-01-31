@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./Services.module.css";
 import Button from "../../components/Button/Button";
 import { fetchWithAuth } from "../../utils/tokenUtils";
-import { Service } from "../../interfaces/Services";
+import { Service } from "../../interfaces/Services"; // Ensure this is up-to-date with the interface changes
 import { useNavigate } from 'react-router-dom';
 import Loading from "../../components/Loading/Loading";
 
@@ -34,7 +34,7 @@ const Services: React.FC = () => {
   }, []);
 
   const handleApplyClick = (service: Service) => {
-    navigate('/service-details', { state: service})
+    navigate('/service-details', { state: service }) // Pass service data to the ServiceDetails page
   };
 
   return (
@@ -48,16 +48,16 @@ const Services: React.FC = () => {
           <div key={index} className={styles.card}>
             <div className={styles.serviceContent}>
               <div className={styles.columnOne}>
-                <h2 className={styles.categoryTitle}>{service.category}</h2>
-                <Button label="Apply" 
+                <h2 className={styles.categoryTitle}>{service.eServiceName}</h2> {/* Ensure this field exists in the updated interface */}
+                <Button label="Apply"
                   onClick={() => handleApplyClick(service)}  // Pass service data to the ServiceDetails page
                 />
               </div>
               <div className={styles.columnTwo}>
                 <ul className={styles.serviceList}>
-                  {service.serviceItems.map((item, itemIndex) => (
+                  {service.serviceItems.map((item, itemIndex) => ( // Ensure serviceItems exists
                     <li key={itemIndex} className={styles.serviceItem}>
-                      {item.item}
+                      {item.item} {/* Ensure item is the correct field */}
                     </li>
                   ))}
                 </ul>
