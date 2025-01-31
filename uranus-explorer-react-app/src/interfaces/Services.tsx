@@ -4,7 +4,9 @@ export interface ServiceItem {
 
 export interface FormField {
     fieldName: string;
-    fieldType: string;
+    fieldTypeName: string;
+    options?: string[];  // Change 'option' to 'options' and define it as an array of strings
+    tooltip?: string;
     required: boolean;
 }
 

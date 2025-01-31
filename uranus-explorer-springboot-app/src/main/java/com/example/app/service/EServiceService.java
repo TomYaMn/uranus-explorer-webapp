@@ -78,11 +78,12 @@ public class EServiceService {
                         mapFieldOptions(formField),
                         Optional.ofNullable(formField.getTooltips())
                                 .map(tooltip -> new EServiceDto.FormFieldTooltipDto(tooltip.getTooltipText()))
-                                .orElse(null),
-                        Optional.ofNullable(formField.getValues())
-                                .map(value -> new EServiceDto.FormFieldValueDto(value.getUserInputValue()))
-                                .orElse(null),
-                        mapFieldDocuments(formField)
+                                .orElse(null)
+//                        ,
+//                        Optional.ofNullable(formField.getValues())
+//                                .map(value -> new EServiceDto.FormFieldValueDto(value.getUserInputValue()))
+//                                .orElse(null),
+//                        mapFieldDocuments(formField)
                 ))
                 .collect(Collectors.toList());
     }

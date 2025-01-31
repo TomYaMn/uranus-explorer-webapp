@@ -44,23 +44,20 @@ public class EServiceDto {
         private String fieldTypeName; // Assuming FieldType is a simple name field
         private List<FormFieldOptionDto> options;
         private FormFieldTooltipDto tooltip;
-        private FormFieldValueDto value;
-        private List<FormFieldDocumentDto> documents;
+
 
         // Default constructor
         public FormField() {}
 
         // Parameterized constructor
         public FormField(String fieldName, String fieldTypeName, boolean required,
-                         List<FormFieldOptionDto> options, FormFieldTooltipDto tooltip,
-                         FormFieldValueDto value, List<FormFieldDocumentDto> documents) {
+                         List<FormFieldOptionDto> options, FormFieldTooltipDto tooltip
+                        ){
             this.fieldName = fieldName;
             this.fieldTypeName = fieldTypeName;
             this.isRequired = required;
             this.options = options;
             this.tooltip = tooltip;
-            this.value = value;
-            this.documents = documents;
         }
 
         public String getFieldName() {
@@ -101,22 +98,6 @@ public class EServiceDto {
 
         public void setTooltip(FormFieldTooltipDto tooltip) {
             this.tooltip = tooltip;
-        }
-
-        public FormFieldValueDto getValue() {
-            return value;
-        }
-
-        public void setValue(FormFieldValueDto value) {
-            this.value = value;
-        }
-
-        public List<FormFieldDocumentDto> getDocuments() {
-            return documents;
-        }
-
-        public void setDocuments(List<FormFieldDocumentDto> documents) {
-            this.documents = documents;
         }
     }
 
