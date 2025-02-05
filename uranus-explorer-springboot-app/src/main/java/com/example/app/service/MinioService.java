@@ -1,58 +1,59 @@
 package com.example.app.service;
 
-import io.minio.BucketExistsArgs;
-import io.minio.MakeBucketArgs;
+import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import io.minio.errors.MinioException;
-import io.minio.messages.Bucket;
-import io.minio.MinioClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
+import java.util.UUID;
 
 @Service
 public class MinioService {
 
-    @Value("${minio.endpoint}")
-    private String endpoint;
-
-    @Value("${minio.accessKey}")
-    private String accessKey;
-
-    @Value("${minio.secretKey}")
-    private String secretKey;
-
     private final MinioClient minioClient;
 
-    // Constructor to allow Spring to inject dependencies
-    public MinioService(@Value("${minio.endpoint}") String endpoint,
-                        @Value("${minio.accessKey}") String accessKey,
-                        @Value("${minio.secretKey}") String secretKey) {
-        this.endpoint = endpoint;
-        this.accessKey = accessKey;
-        this.secretKey = secretKey;
+    @Value("${minio.bucket-name}")
+    private String bucketName;
 
-        // Initialize Minio client
-        this.minioClient = MinioClient.builder()
-                .endpoint(endpoint)
-                .credentials(accessKey, secretKey)
-                .build();
+    public MinioService(MinioClient minioClient) {
+        this.minioClient = minioClient;
     }
 
-    public void uploadFile(String bucketName, String objectName, InputStream inputStream, String contentType) {
+    public String uploadFile(Long formFieldId, MultipartFile file) {
         try {
-            boolean found = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
-            if (!found) {
-                minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
-            }
+            // Generate a unique filename using formFieldId and a UUID
+            String fileName = "documents/" + formFieldId + "_" + UUID.randomUUID() + "." + getFileExtension(file.getOriginalFilename());
+
+            // Get file input stream
+            InputStream inputStream = file.getInputStream();
+
+            // Upload file to MinIO
             minioClient.putObject(
-                    PutObjectArgs.builder().bucket(bucketName).object(objectName).stream(
-                                    inputStream, inputStream.available(), -1)
-                            .contentType(contentType)
-                            .build());
+                    PutObjectArgs.builder()
+                            .bucket(bucketName)
+                            .object(fileName)
+                            .stream(inputStream, file.getSize(), -1)
+                            .contentType(file.getContentType())
+                            .build()
+            );
+
+            // Return the generated file URL
+            return "http://localhost:9000/" + bucketName + "/" + fileName;
+
+        } catch (MinioException e) {
+            throw new RuntimeException("Error uploading file to MinIO: " + e.getMessage(), e);
         } catch (Exception e) {
-            throw new RuntimeException("Error occurred: " + e.getMessage());
+            throw new RuntimeException("File upload failed: " + e.getMessage(), e);
         }
+    }
+
+    private String getFileExtension(String filename) {
+        if (filename == null || !filename.contains(".")) {
+            return "";
+        }
+        return filename.substring(filename.lastIndexOf(".") + 1);
     }
 }

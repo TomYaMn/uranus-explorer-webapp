@@ -23,6 +23,6 @@ public class StoreController {
         String objectName = file.getOriginalFilename();
         String contentType = file.getContentType();
 
-        minioService.uploadFile(bucketName, objectName, file.getInputStream(), contentType);
+        // minioService.uploadFile(bucketName, objectName, file.getInputStream(), contentType);
     }
 }
